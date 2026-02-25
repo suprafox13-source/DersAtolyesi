@@ -3,163 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DersAtölyesi | Giriş Paneli</title>
+    <title>DersAtölyesi | Panel & Yönetim</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
-        }
+        :root { --primary: #ff6b15; --dark: #2c3e50; --bg: #f0f2f5; --success: #2ecc71; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg); display: flex; height: 100vh; overflow: hidden; }
 
-        body {
-            background-color: #f8f9fa;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        /* Navigasyon */
-        nav {
-            width: 100%;
-            background: white;
-            padding: 15px 10%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border-bottom: 3px solid #ff6b15;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 800;
-            color: #2c3e50;
-        }
-
-        .logo span { color: #ff6b15; }
-
-        /* Giriş Kartı */
-        .login-card {
-            background: white;
-            width: 90%;
-            max-width: 400px;
-            margin-top: 50px;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        .login-card h2 { color: #333; margin-bottom: 10px; }
-        .login-card p { color: #666; font-size: 14px; margin-bottom: 25px; }
-
-        /* Inputlar */
-        .form-group { text-align: left; margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 13px; color: #444; }
+        /* YAN MENÜ */
+        .sidebar { width: 280px; background: var(--dark); color: white; padding: 20px; display: flex; flex-direction: column; }
+        .sidebar h1 { font-size: 22px; margin-bottom: 30px; color: var(--primary); text-align: center; }
         
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #eee;
-            border-radius: 10px;
-            outline: none;
-            transition: 0.3s;
-        }
+        .profile-section { text-align: center; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px; margin-bottom: 20px; }
+        .profile-img { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--primary); margin-bottom: 10px; object-fit: cover; }
+        .profile-section input { background: transparent; border: none; color: white; text-align: center; font-size: 16px; width: 100%; outline: none; }
 
-        .form-group input:focus { border-color: #ff6b15; background: #fffcf9; }
+        .menu-item { padding: 12px; margin-bottom: 5px; cursor: pointer; border-radius: 10px; display: flex; align-items: center; gap: 10px; color: #bdc3c7; transition: 0.3s; }
+        .menu-item:hover, .active { background: var(--primary); color: white; }
 
-        /* Butonlar */
-        .btn-login {
-            width: 100%;
-            padding: 14px;
-            background: #ff6b15;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-        }
+        /* ANA İÇERİK */
+        .main-content { flex: 1; padding: 30px; overflow-y: auto; position: relative; }
 
-        .btn-google {
-            width: 100%;
-            padding: 12px;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            cursor: pointer;
-            margin-top: 15px;
-            font-weight: 500;
-            color: #555;
-            transition: 0.2s;
-        }
+        /* BİLDİRİM PANELİ (GÖREVLİ ÖZELLİĞİ) */
+        .notification-card { background: #fff; padding: 20px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 30px; border-left: 5px solid var(--primary); }
+        .req-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dotted #eee; }
+        .btn-add { background: var(--success); color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
 
-        .btn-google:hover { background: #f1f1f1; }
+        /* SINIF GRUPLARI */
+        .class-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        .class-card { background: white; padding: 20px; border-radius: 15px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .class-card h4 { color: var(--dark); margin-bottom: 10px; }
 
-        .divider { margin: 20px 0; color: #bbb; font-size: 12px; display: flex; align-items: center; }
-        .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: #eee; margin: 0 10px; }
-
-        footer { margin-top: auto; padding: 20px; color: #aaa; font-size: 12px; }
+        /* SOHBET KUTUSU */
+        .chat-container { position: fixed; bottom: 20px; right: 20px; width: 300px; background: white; border-radius: 15px 15px 0 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.2); display: flex; flex-direction: column; }
+        .chat-header { background: var(--dark); color: white; padding: 15px; border-radius: 15px 15px 0 0; cursor: pointer; display: flex; justify-content: space-between; }
+        .chat-messages { height: 250px; padding: 15px; overflow-y: auto; font-size: 14px; background: #f9f9f9; }
+        .msg { margin-bottom: 10px; padding: 8px 12px; border-radius: 10px; max-width: 80%; }
+        .msg.sent { background: var(--primary); color: white; align-self: flex-end; margin-left: auto; }
+        .msg.received { background: #eee; color: #333; }
+        .chat-input { display: flex; padding: 10px; border-top: 1px solid #eee; }
+        .chat-input input { flex: 1; border: none; outline: none; padding: 5px; }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo">Ders<span>Atölyesi</span></div>
-    </nav>
+    <div class="sidebar">
+        <h1>Ders<span>Atölyesi</span></h1>
+        
+        <div class="profile-section">
+            <img src="https://via.placeholder.com/80" class="profile-img" alt="Profil">
+            <input type="text" value="Adını Buraya Yaz" title="Adını değiştirmek için tıkla">
+            <p style="font-size: 12px; color: var(--primary); margin-top: 5px;">⭐ Sınıf Görevlisi</p>
+        </div>
 
-    <div class="login-card">
-        <h2>Tekrar Hoş Geldin!</h2>
-        <p>Eğitim hesabına güvenli bir şekilde eriş.</p>
+        <div class="menu-item active">🏠 Panel</div>
+        <div class="menu-item">👥 Sınıf Gruplarım</div>
+        <div class="menu-item">📂 Ders Notları</div>
+        <div class="menu-item">📊 İstatistikler</div>
+        <a href="index.html" style="text-decoration: none; margin-top: auto;">
+            <div class="menu-item" style="color: #ff4757;">🚪 Çıkış Yap</div>
+        </a>
+    </div>
 
-        <form id="loginForm">
-            <div class="form-group">
-                <label>E-posta Adresi</label>
-                <input type="email" id="email" placeholder="örnek@gmail.com" required>
+    <div class="main-content">
+        <div class="notification-card" id="adminPanel">
+            <h3 style="margin-bottom: 15px;">🔔 Yönetici Bildirimleri</h3>
+            <div class="req-item" id="request1">
+                <span><strong>Mehmet Can</strong> 9/A sınıfına katılmak istiyor.</span>
+                <button class="btn-add" onclick="approveMember('request1')">Tek Tuşla Ekle</button>
             </div>
-
-            <div class="form-group">
-                <label>Şifre</label>
-                <input type="password" id="pass" placeholder="••••••••" required>
+            <div class="req-item" id="request2">
+                <span><strong>Ayşe Demir</strong> 9/A sınıfına katılmak istiyor.</span>
+                <button class="btn-add" onclick="approveMember('request2')">Tek Tuşla Ekle</button>
             </div>
+        </div>
 
-            <button type="submit" id="btn" class="btn-login">Giriş Yap</button>
-        </form>
-
-        <div class="divider">veya</div>
-
-        <button class="btn-google">
-            <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Google">
-            Google ile Giriş Yap
-        </button>
-
-        <div style="margin-top: 20px; font-size: 13px;">
-            Hesabın yok mu? <a href="#" style="color: #ff6b15; font-weight: bold; text-decoration: none;">Kayıt Ol</a>
+        <h2 style="margin-bottom: 20px;">Aktif Sınıf Grupların</h2>
+        <div class="class-grid">
+            <div class="class-card"><h4>9/A Fen Sınıfı</h4><p style="font-size: 12px; color: #777;">24 Öğrenci</p></div>
+            <div class="class-card"><h4>YKS Hazırlık</h4><p style="font-size: 12px; color: #777;">12 Öğrenci</p></div>
+            <div class="class-card" style="border: 2px dashed #ccc; background: transparent; cursor: pointer;"><h4>+ Yeni Grup</h4></div>
         </div>
     </div>
 
-    <footer>
-        &copy; 2026 DersAtölyesi | Güvenli Eğitim Portalı
-    </footer>
+    <div class="chat-container">
+        <div class="chat-header">
+            <span>💬 Sınıf Sohbeti (9/A)</span>
+            <span>➖</span>
+        </div>
+        <div class="chat-messages" id="chatBox">
+            <div class="msg received">Selam arkadaşlar, ödevleri yaptınız mı?</div>
+            <div class="msg sent">Ben bitirdim, birazdan gruba atarım.</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatMsg" placeholder="Mesajını yaz...">
+            <button onclick="sendMessage()" style="border:none; background:transparent; color:var(--primary); font-weight:bold; cursor:pointer;">Gönder</button>
+        </div>
+    </div>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const btn = document.getElementById('btn');
-            btn.innerHTML = "Güvenli Bağlantı Kuruluyor...";
-            btn.style.opacity = "0.7";
-            
-            setTimeout(() => {
-                window.location.href = 'dashboard.html';
-            }, 1200);
-        });
+        // Üye Onaylama Fonksiyonu
+        function approveMember(id) {
+            alert("Öğrenci başarıyla sınıfa eklendi ve gruba kaydedildi!");
+            document.getElementById(id).style.display = "none";
+        }
+
+        // Mesaj Gönderme Fonksiyonu
+        function sendMessage() {
+            const input = document.getElementById('chatMsg');
+            const chatBox = document.getElementById('chatBox');
+            if(input.value.trim() !== "") {
+                const newMsg = document.createElement('div');
+                newMsg.className = "msg sent";
+                newMsg.innerText = input.value;
+                chatBox.appendChild(newMsg);
+                input.value = "";
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        }
     </script>
 
 </body>
