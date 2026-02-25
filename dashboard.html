@@ -1,18 +1,152 @@
-<div class="user-profile">
-    <img id="displayImage" src="" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--p); margin-bottom: 10px;">
-    <div id="displayUserName" style="font-weight: bold; color: white;">Öğrenci Adı</div>
-    <span class="badge">Genel Sınıf Görevlisi</span>
-</div>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DersAtölyesi | Panel</title>
+    <style>
+        :root { --p: #ff7675; --s: #55efc4; --blue: #0984e3; --dark: #2d3436; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Comic Sans MS', sans-serif; }
+        body { background-color: #f1f2f6; display: flex; height: 100vh; overflow: hidden; }
 
-<script>
-    // Bilgileri Hafızadan Çek
-    const name = localStorage.getItem('da_name') || "Gezgin";
-    const image = localStorage.getItem('da_image');
+        /* YAN MENÜ (SIDEBAR) */
+        .sidebar { width: 280px; background: var(--dark); color: white; padding: 25px; display: flex; flex-direction: column; }
+        .sidebar h2 { color: var(--p); margin-bottom: 30px; text-align: center; }
+        
+        .user-profile { text-align: center; background: rgba(255,255,255,0.1); padding: 20px; border-radius: 20px; margin-bottom: 20px; border: 2px solid var(--p); }
+        .profile-pic { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid var(--p); margin-bottom: 10px; background: #eee; }
+        #displayUserName { font-size: 18px; font-weight: bold; color: white; margin-bottom: 5px; }
+        .badge { background: var(--s); color: #2d3436; padding: 4px 10px; border-radius: 10px; font-size: 11px; font-weight: bold; display: inline-block; }
 
-    document.getElementById('displayUserName').innerText = name;
-    
-    // Eğer resim varsa göster
-    if(image) {
-        document.getElementById('displayImage').src = image;
-    }
-</script>
+        /* ANA İÇERİK ALANI */
+        .main { flex: 1; padding: 30px; overflow-y: auto; }
+        .welcome-box { background: white; padding: 25px; border-radius: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); margin-bottom: 30px; border-left: 10px solid var(--p); }
+
+        /* BİLDİRİM PANELİ */
+        .admin-notif { background: white; padding: 20px; border-radius: 20px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .req { display: flex; justify-content: space-between; align-items: center; background: #f8f9fa; padding: 12px; border-radius: 12px; margin-top: 10px; }
+        .btn-ok { background: var(--s); border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-ok:hover { transform: scale(1.05); background: #45d6ab; }
+
+        /* SINIF KARTLARI */
+        .grade-section { margin-bottom: 30px; }
+        .grade-title { font-size: 22px; color: var(--dark); margin-bottom: 15px; border-bottom: 2px solid #ddd; padding-bottom: 5px; }
+        .class-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px; }
+        .class-card { background: white; padding: 15px; border-radius: 15px; text-align: center; box-shadow: 0 5px 10px rgba(0,0,0,0.05); transition: 0.3s; border: 2px solid transparent; }
+        .class-card:hover { transform: translateY(-5px); border-color: var(--p); }
+        .class-card h4 { font-size: 20px; color: var(--blue); }
+
+        /* SOHBET KUTUSU */
+        .chat { position: fixed; bottom: 0; right: 20px; width: 300px; background: white; border-radius: 15px 15px 0 0; box-shadow: 0 -5px 20px rgba(0,0,0,0.2); }
+        .chat-head { background: var(--dark); color: white; padding: 12px; border-radius: 15px 15px 0 0; display: flex; justify-content: space-between; cursor: pointer; }
+        #msgs { height: 180px; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 5px; }
+        .m { padding: 8px; border-radius: 10px; font-size: 12px; max-width: 85%; }
+        .m.in { background: #eee; align-self: flex-start; }
+        .m.out { background: var(--p); color: white; align-self: flex-end; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>DersAtölyesi</h2>
+        <div class="user-profile">
+            <img id="displayImage" src="https://via.placeholder.com/90" class="profile-pic">
+            <div id="displayUserName">Gezgin Öğrenci</div>
+            <span class="badge">Genel Sınıf Görevlisi</span>
+        </div>
+        <div style="margin-top: 10px;">
+            <p style="padding: 10px; color: var(--p); cursor:pointer;">🏠 Ana Sayfa</p>
+            <p style="padding: 10px; cursor:pointer;">📚 Derslerim</p>
+            <p style="padding: 10px; cursor:pointer;">🏆 Başarılar</p>
+        </div>
+        <a href="index.html" style="margin-top: auto; color: #ff7675; text-decoration: none; padding-bottom: 20px;">🚪 Güvenli Çıkış</a>
+    </div>
+
+    <div class="main">
+        <div class="welcome-box">
+            <h1>Hoş geldin, <span id="welcomeName" style="color: var(--p);">Öğrenci</span>! 👋</h1>
+            <p>Bugün tüm sınıflar senin kontrolünde. İyi çalışmalar!</p>
+        </div>
+
+        <div class="admin-notif">
+            <h3>🔔 Sınıf Katılım İstekleri</h3>
+            <div id="requests">
+                <div class="req" id="q1">
+                    <span><strong>Mert Aydın</strong> - 5/B sınıfına girmek istiyor.</span>
+                    <button class="btn-ok" onclick="onayla('q1')">Onayla</button>
+                </div>
+                <div class="req" id="q2">
+                    <span><strong>Selin Işık</strong> - 8/F sınıfına girmek istiyor.</span>
+                    <button class="btn-ok" onclick="onayla('q2')">Onayla</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="allClasses"></div>
+    </div>
+
+    <div class="chat">
+        <div class="chat-head"><span>💬 Sınıf Sohbeti</span> <span>▼</span></div>
+        <div id="msgs">
+            <div class="m in"><strong>Admin:</strong> Yeni görevli atandı, başarılar!</div>
+        </div>
+        <div style="display: flex; padding: 8px; border-top: 1px solid #eee;">
+            <input type="text" id="inp" placeholder="Mesaj yaz..." style="flex:1; padding:5px; border:1px solid #ddd; border-radius:5px; outline:none;">
+            <button onclick="send()" style="background:var(--p); color:white; border:none; padding:5px 10px; margin-left:5px; border-radius:5px; cursor:pointer;">></button>
+        </div>
+    </div>
+
+    <script>
+        // 1. HAFIZADAKİ BİLGİLERİ ÇEK
+        const savedName = localStorage.getItem('da_name') || "Gezgin";
+        const savedImage = localStorage.getItem('da_image') || "https://via.placeholder.com/90";
+
+        document.getElementById('displayUserName').innerText = savedName;
+        document.getElementById('welcomeName').innerText = savedName;
+        document.getElementById('displayImage').src = savedImage;
+
+        // 2. SINIFLARI OTOMATİK OLUŞTUR (5A-8F)
+        const container = document.getElementById('allClasses');
+        const kademeler = [5, 6, 7, 8];
+        const subeler = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+        kademeler.forEach(k => {
+            const section = document.createElement('div');
+            section.className = 'grade-section';
+            section.innerHTML = `<h2 class="grade-title">${k}. Sınıflar</h2>`;
+            
+            const grid = document.createElement('div');
+            grid.className = 'class-grid';
+            
+            subeler.forEach(s => {
+                const card = document.createElement('div');
+                card.className = 'class-card';
+                card.innerHTML = `<h4>${k}/${s}</h4><p style="font-size:10px; color:#999;">Girmek için tıkla</p>`;
+                card.onclick = () => alert(k + '/' + s + ' sınıfı yönetimine girdin!');
+                grid.appendChild(card);
+            });
+            
+            section.appendChild(grid);
+            container.appendChild(section);
+        });
+
+        // 3. FONKSİYONLAR
+        function onayla(id) {
+            document.getElementById(id).innerHTML = "✅ Başarıyla sınıfa eklendi!";
+            setTimeout(() => { document.getElementById(id).style.display = 'none'; }, 1000);
+        }
+
+        function send() {
+            const i = document.getElementById('inp');
+            if(i.value.trim() !== "") {
+                const m = document.createElement('div');
+                m.className = "m out";
+                m.innerText = i.value;
+                document.getElementById('msgs').appendChild(m);
+                i.value = "";
+                document.getElementById('msgs').scrollTop = 9999;
+            }
+        }
+    </script>
+</body>
+</html>
