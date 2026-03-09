@@ -2,121 +2,149 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>5-A Matematik Paneli</title>
+    <title>5-A Matematik İzi | Görevli Paneli</title>
     <style>
-        :root { --eba: #0088cc; --dark: #2c3e50; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background: #f4f7f8; display: flex; height: 100vh; }
-        
-        /* Sol Sidebar */
-        .sidebar { width: 240px; background: white; border-right: 1px solid #ddd; display: flex; flex-direction: column; }
-        .eba-header { background: var(--eba); color: white; padding: 15px; text-align: center; font-weight: bold; }
+        :root { --eba: #0088cc; --koyu: #2c3e50; --turuncu: #ff9f43; --gri: #f4f7f8; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background: var(--gri); display: flex; height: 100vh; overflow: hidden; }
+
+        /* Sol Menü */
+        .sidebar { width: 250px; background: white; border-right: 1px solid #ddd; display: flex; flex-direction: column; }
+        .logo { background: var(--eba); color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 20px; }
         .profile { padding: 20px; text-align: center; border-bottom: 1px solid #eee; }
-        .role-tag { background: #ff4757; color: white; font-size: 10px; padding: 2px 8px; border-radius: 10px; margin-top: 5px; display: inline-block; }
+        #uPic { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--eba); margin-bottom: 10px; }
+        .badge { background: #ff4757; color: white; font-size: 10px; padding: 3px 10px; border-radius: 10px; display: inline-block; font-weight: bold; }
         
-        .nav-item { padding: 15px 20px; cursor: pointer; font-size: 14px; border-bottom: 1px solid #f9f9f9; }
+        .nav-item { padding: 15px 25px; cursor: pointer; color: #444; font-size: 14px; transition: 0.2s; border-bottom: 1px solid #f9f9f9; }
         .nav-item:hover { background: #f0f7ff; color: var(--eba); }
         .active { background: var(--eba); color: white !important; }
 
-        /* Ana Alan */
+        /* Ana İçerik */
         .main { flex: 1; display: flex; flex-direction: column; }
-        .top-bar { background: var(--dark); color: white; padding: 10px 20px; display: flex; justify-content: space-between; }
-        .content { padding: 20px; overflow-y: auto; display: grid; grid-template-columns: 1fr 300px; gap: 20px; }
+        .top-bar { background: var(--koyu); color: white; padding: 12px 30px; display: flex; justify-content: space-between; align-items: center; }
+        .container { padding: 25px; overflow-y: auto; display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px; }
 
-        .card { background: white; border-radius: 5px; border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; }
-        .card-h { font-weight: bold; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px; color: var(--eba); }
+        /* Kartlar */
+        .card { background: white; border-radius: 8px; border: 1px solid #ddd; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .card-h { font-size: 16px; font-weight: bold; color: var(--eba); border-bottom: 1.5px solid #eee; padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; }
 
-        /* Kitap Ödevi Listesi */
-        .homework-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #eee; font-size: 13px; }
-        
-        /* Mesaj Kısmı */
-        .chat-box { height: 200px; overflow-y: auto; background: #f9f9f9; padding: 10px; border: 1px solid #eee; margin-bottom: 10px; }
-        .msg { margin-bottom: 8px; font-size: 12px; }
-        .msg b { color: var(--eba); }
+        /* Liste Yapıları */
+        .list-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #eee; font-size: 13px; }
+        .status { font-weight: bold; font-size: 11px; padding: 2px 8px; border-radius: 4px; }
+        .done { background: #e3fcef; color: #00875a; }
+        .wait { background: #fff0b3; color: #856404; }
+
+        /* Sınav Modülü */
+        .quiz-box { background: #f9f9f9; padding: 15px; border-radius: 8px; text-align: center; }
+        .btn-quiz { background: var(--turuncu); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+
+        /* Mesajlaşma */
+        .chat { height: 150px; overflow-y: auto; background: #fafafa; border: 1px solid #eee; padding: 10px; margin-bottom: 10px; font-size: 13px; }
+        input[type="text"] { width: 75%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; outline: none; }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <div class="eba-header">MATEMATİK İZİ</div>
+        <div class="logo">MATEMATİK İZİ</div>
         <div class="profile">
-            <img id="uPic" src="https://api.dicebear.com/7.x/bottts/svg?seed=Admin" style="width:70px; border-radius:50%; border:2px solid var(--eba);">
+            <img id="uPic" src="https://api.dicebear.com/7.x/bottts/svg?seed=Admin">
             <h4 id="uName">Yükleniyor...</h4>
-            <div class="role-tag">GENEL SINIF GÖREVLİSİ</div>
-            <p style="font-size: 11px; color: #999; margin-top:5px;">5-A Sınıfı</p>
+            <div class="badge">GENEL SINIF GÖREVLİSİ</div>
+            <p style="font-size: 12px; color: var(--eba); margin-top: 5px; font-weight: bold;">5-A SINIFI</p>
         </div>
         <div class="nav-menu">
-            <div class="nav-item active">👤 Sayfam</div>
+            <div class="nav-item active">🏠 Ana Panel</div>
             <div class="nav-item">📚 Kitap Sunumları</div>
-            <div class="nav-item">📝 Ödev Takibi</div>
-            <div class="nav-item" onclick="hocayaBildir()" style="color:#ff4757; font-weight:bold;">📤 Hocama Bildir</div>
-            <div class="nav-item" onclick="cikisYap()" style="margin-top:20px; font-size:12px; color:#aaa;">Çıkış Yap</div>
+            <div class="nav-item">📝 Ödev Takip</div>
+            <div class="nav-item">✍️ Test & Sınavlar</div>
+            <div class="nav-item" style="color:#ff4757; font-weight:bold" onclick="hocayaRaporla()">📤 Hocama Bildir</div>
         </div>
     </div>
 
     <div class="main">
         <div class="top-bar">
-            <span>5-A Matematik Atölyesi</span>
-            <span id="date"></span>
+            <span>Cumhuriyet Ortaokulu / 5-A Şubesi</span>
+            <div style="font-size: 13px;">Puanım: <b id="totalXP" style="color:var(--turuncu)">37</b></div>
         </div>
 
-        <div class="content">
+        <div class="container">
             <div class="left">
                 <div class="card">
-                    <div class="card-h">📖 Güncel Kitap Sunumları (Ödevler)</div>
-                    <div id="hw-list">
-                        <div class="homework-item"><span>1. Ahmet Yılmaz - Kesirler Dünyası</span> <span style="color:green">TAMAM</span></div>
-                        <div class="homework-item"><span>2. Ayşe Demir - Sayıların Gizemi</span> <span style="color:orange">BEKLİYOR</span></div>
+                    <div class="card-h">📖 Kitap Sunumu & Ödev Durumu <span>(Haftalık)</span></div>
+                    <div class="list-item"><span>📌 Kesirler Kitabı Sunumu - Kerem A.</span> <span class="status done">TAMAMLANDI</span></div>
+                    <div class="list-item"><span>📌 Sayı Avcıları Sunumu - Zeynep T.</span> <span class="status wait">BEKLENİYOR</span></div>
+                    <div class="list-item"><span>📝 Doğal Sayılar Çalışma Kağıdı</span> <span class="status wait">6 KİŞİ EKSİK</span></div>
+                </div>
+
+                <div class="card">
+                    <div class="card-h">✍️ Matematik Sınav Merkezi</div>
+                    <div class="quiz-box">
+                        <p style="font-size: 14px; color: #666;">Aktif Sınav: <b>Doğal Sayılarla İşlemler</b></p>
+                        <button class="btn-quiz" onclick="sinavBaslat()">Sınava Başla (5 Soru)</button>
                     </div>
                 </div>
 
                 <div class="card">
-                    <div class="card-h">💬 Sınıf Mesaj Alanı</div>
-                    <div class="chat-box" id="chat">
-                        <div class="msg"><b>Sistem:</b> Merhaba Görevli, 5-A sınıfı mesajları burada görünecek.</div>
+                    <div class="card-h">💬 Sınıf Mesajları</div>
+                    <div class="chat" id="chatbox">
+                        <div><b>Sistem:</b> 5-A Sınıfı mesajlaşma alanı aktif.</div>
                     </div>
-                    <input type="text" id="msgInp" placeholder="Sınıfa mesaj yaz..." style="width:80%; padding:8px; border:1px solid #ddd; border-radius:5px;">
-                    <button onclick="mesajGonder()" style="padding:8px 15px; background:var(--eba); color:white; border:none; border-radius:5px; cursor:pointer;">Gönder</button>
+                    <input type="text" id="mInp" placeholder="Duyuru yaz...">
+                    <button onclick="sendMsg()" style="padding:8px; background:var(--eba); color:white; border:none; border-radius:4px; cursor:pointer;">Gönder</button>
                 </div>
             </div>
 
             <div class="right">
                 <div class="card">
-                    <div class="card-h">📋 Görevli Notları</div>
-                    <textarea id="notes" style="width:100%; height:100px; border:none; outline:none; font-size:13px;" placeholder="Hocana ileteceğin notları buraya yaz..."></textarea>
+                    <div class="card-h">📝 Görevli Not Defteri</div>
+                    <p style="font-size: 12px; color: #888; margin-bottom: 10px;">Hocana iletilecek notları buraya yaz:</p>
+                    <textarea id="notlar" style="width:100%; height:150px; border:1px solid #eee; padding:10px; font-size:13px; outline:none;" placeholder="Örn: Bugün ödevlerini getirmeyen öğrenciler..."></textarea>
+                </div>
+
+                <div class="card" style="text-align: center;">
+                    <div class="card-h">📅 Takvim</div>
+                    <h2 style="color:var(--eba)">9</h2>
+                    <p>Mart 2026</p>
+                    <div style="margin-top:15px; font-size: 12px; color: #ff4757; font-weight: bold;">Yarın: Üslü Sayılar Testi!</div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Verileri Yükle
-        const ad = localStorage.getItem('m_izi_name');
-        document.getElementById('uName').innerText = ad;
-        document.getElementById('date').innerText = new Date().toLocaleDateString();
+        // Sayfa Yüklendiğinde
+        window.onload = function() {
+            const isim = localStorage.getItem('m_izi_name') || "Görevli";
+            document.getElementById('uName').innerText = isim;
+            document.getElementById('totalXP').innerText = localStorage.getItem('m_izi_xp') || "37";
+        };
 
-        // Mesaj Gönderme
-        function mesajGonder() {
-            const inp = document.getElementById('msgInp');
-            if(inp.value.trim() == "") return;
-            const chat = document.getElementById('chat');
-            chat.innerHTML += `<div class="msg"><b>Sen:</b> ${inp.value}</div>`;
+        // Mesaj Gönder
+        function sendMsg() {
+            const inp = document.getElementById('mInp');
+            if(inp.value == "") return;
+            const chat = document.getElementById('chatbox');
+            chat.innerHTML += `<div><b>Sen:</b> ${inp.value}</div>`;
             inp.value = "";
             chat.scrollTop = chat.scrollHeight;
         }
 
-        // Hocaya Bildirme (Simülasyon)
-        function hocayaBildir() {
-            const notlar = document.getElementById('notes').value;
-            alert("Rapor Hazırlandı!\n\nGörevli: " + ad + "\nSınıf: 5-A\n\nNotlar: " + (notlar || "Ödevler kontrol edildi."));
-            console.log("Hocaya gönderilen rapor:", notlar);
+        // Sınav Başlatma
+        function sinavBaslat() {
+            let cevap = confirm("Matematik Testi Başlatılsın mı? (5 Dakika Süren Var)");
+            if(cevap) {
+                alert("Test Yükleniyor... İlk Soru: 1.250 + 3.450 işleminin sonucu kaçtır?");
+            }
         }
 
-        // Çıkış Yapma
-        function cikisYap() {
-            if(confirm("Çıkış yapmak istediğine emin misin? (Giriş bilgileriniz silinecek)")) {
-                localStorage.clear();
-                window.location.href = 'index.html';
+        // Hocaya Bildir
+        function hocayaRaporla() {
+            const not = document.getElementById('notlar').value;
+            if(!not) {
+                alert("Lütfen önce notlar kısmına raporunuzu yazın.");
+            } else {
+                alert("Raporunuz başarıyla hocanıza (simüle) iletildi!\n\nGörevli: " + localStorage.getItem('m_izi_name'));
             }
         }
     </script>
