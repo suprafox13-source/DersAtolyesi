@@ -3,88 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <title>Matematik İzi | Güvenli Giriş</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background: #0f0c29; height: 100vh; display: flex; align-items: center; justify-content: center; color: white; }
-        .login-card { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); width: 350px; text-align: center; }
-        .avatar-box { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #ff9f43; margin: 0 auto 20px; overflow: hidden; position: relative; }
+        .login-card { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); padding: 40px; border-radius: 25px; width: 360px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
+        .avatar-box { width: 110px; height: 110px; border-radius: 50%; border: 3px solid #ff9f43; margin: 0 auto 20px; overflow: hidden; position: relative; }
         #preview { width: 100%; height: 100%; object-fit: cover; }
-        input[type="text"] { width: 100%; padding: 12px; border-radius: 8px; border: none; margin-bottom: 20px; outline: none; text-align: center; font-size: 16px; }
-        .btn { width: 100%; padding: 15px; background: #ff9f43; border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; font-size: 16px; }
-        #status { font-size: 11px; margin-top: 10px; color: #ff9f43; }
+        input[type="text"] { width: 100%; padding: 14px; border-radius: 10px; border: none; margin-bottom: 20px; outline: none; text-align: center; font-size: 16px; background: #eee; }
+        .btn { width: 100%; padding: 16px; background: #ff9f43; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.3s; }
+        .btn:hover { background: #e67e22; }
+        .warning { color: #ff4757; font-size: 12px; margin-top: 10px; display: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <div class="login-card">
-        <h1 style="margin-bottom: 20px;">MATEMATİK <span style="color:#ff9f43">İZİ</span></h1>
+        <h1 style="margin-bottom: 10px;">MATEMATİK <span style="color:#ff9f43">İZİ</span></h1>
+        <p style="font-size: 12px; color: #aaa; margin-bottom: 20px;">Lütfen sadece gerçek isminizi giriniz.</p>
         
         <div class="avatar-box">
             <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Math" id="preview">
             <input type="file" id="imgInp" accept="image/*" style="display:none">
-            <label for="imgInp" style="position:absolute; bottom:0; width:100%; background:rgba(0,0,0,0.6); font-size:10px; cursor:pointer;">DEĞİŞTİR</label>
+            <label for="imgInp" style="position:absolute; bottom:0; width:100%; background:rgba(0,0,0,0.7); font-size:10px; cursor:pointer; padding:3px;">GÜNCELLE</label>
         </div>
 
-        <input type="text" id="uName" placeholder="Adınız Soyadınız">
-        <button class="btn" onclick="girisYap()">Atölyeye Gir</button>
-        <p id="status">Sistem Kontrol Ediliyor...</p>
+        <input type="text" id="uName" placeholder="Adınız Soyadınız" autocomplete="off">
+        <button class="btn" onclick="guvenliGiris()">Atölyeye Gir</button>
+        <p id="errorBox" class="warning">Uygunsuz içerik tespit edildi!</p>
     </div>
 
     <script>
+        // SİSTEMİN "KÜFÜR" OLARAK ALGILAYACAĞI ANAHTAR KELİMELER
+        // Burayı istediğin kadar genişletebilirsin.
+        const karaListe = ["kufur1", "argo1", "kotukelime", "pislik", "aptal", "manyak"]; 
+
         let photoData = "";
         
-        // Fotoğraf seçme
         document.getElementById('imgInp').onchange = function(e) {
             const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = (event) => {
-                    document.getElementById('preview').src = event.target.result;
-                    photoData = event.target.result;
+                reader.onload = (f) => {
+                    document.getElementById('preview').src = f.target.result;
+                    photoData = f.target.result;
                 };
                 reader.readAsDataURL(file);
             }
         };
 
-        // Giriş Fonksiyonu
-        function girisYap() {
-            const nameInput = document.getElementById('uName').value.trim();
-            const status = document.getElementById('status');
-
-            // 1. Boşluk Kontrolü
-            if (nameInput.length < 2) {
-                alert("Lütfen geçerli bir isim girin!");
-                return;
-            }
-
-            // 2. Sadece Harf ve Boşluk Kontrolü (Sayılar ve semboller giremez)
-            const harfKontrol = /^[a-zA-ZçğıöşüÇĞİÖŞÜ\s]+$/;
-            if (!harfKontrol.test(nameInput)) {
-                alert("İsimde sadece harf kullanabilirsiniz!");
-                return;
-            }
-
-            // 3. Basit AI/Mantık Kontrolü (Çok fazla sessiz harf yan yana mı?)
-            const sessizHarfSerisi = /([^aeıioöuü\s]{5,})/i;
-            if (sessizHarfSerisi.test(nameInput)) {
-                alert("Lütfen gerçek bir isim yazın (anlamsız harf dizisi tespit edildi).");
-                return;
-            }
-
-            // Verileri Kaydet ve Git
-            localStorage.setItem('m_izi_name', nameInput);
-            localStorage.setItem('m_izi_img', photoData || document.getElementById('preview').src);
+        function guvenliGiris() {
+            const isim = document.getElementById('uName').value.trim().toLowerCase();
+            const errorBox = document.getElementById('errorBox');
             
-            // Dashboard'a yönlendir
-            window.location.href = 'dashboard.html';
-        }
+            // 1. ADIM: Boşluk kontrolü
+            if (isim.length < 3) {
+                alert("Lütfen en az 3 harfli bir isim girin.");
+                return;
+            }
 
-        // Sayfa hazır olduğunda durumu güncelle
-        window.onload = () => {
-            document.getElementById('status').innerText = "AI Koruması Aktif ✅";
-        };
+            // 2. ADIM: Semantik Kontrol (Kara Liste Taraması)
+            // Kelimenin içinde yasaklı bir parça var mı diye bakar.
+            const yasakliMi = karaListe.some(kelime => isim.includes(kelime));
+
+            // 3. ADIM: Sayı ve Sembol Kontrolü
+            const sadeceHarf = /^[a-zçğıöşü\s]+$/;
+
+            if (!sadeceHarf.test(isim)) {
+                errorBox.innerText = "İsimde sadece harf kullanabilirsiniz!";
+                errorBox.style.display = "block";
+            } else if (yasakliMi) {
+                errorBox.innerText = "Bu kelime topluluk kurallarına aykırıdır!";
+                errorBox.style.display = "block";
+            } else {
+                errorBox.style.display = "none";
+                // Kaydet ve Dashboard'a yolla
+                localStorage.setItem('m_izi_name', document.getElementById('uName').value.trim());
+                localStorage.setItem('m_izi_img', photoData || document.getElementById('preview').src);
+                window.location.href = 'dashboard.html';
+            }
+        }
     </script>
 </body>
 </html>
