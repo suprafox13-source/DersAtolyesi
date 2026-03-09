@@ -7,102 +7,42 @@
         :root { --dark: #1e272e; --side: #0f1419; --accent: #ff9f43; --card: #2f3542; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background: var(--dark); color: #d2dae2; display: flex; height: 100vh; overflow: hidden; }
-
-        .sidebar { width: 260px; background: var(--side); padding: 20px; display: flex; flex-direction: column; border-right: 1px solid #333; }
-        .profile { text-align: center; padding: 20px 0; border-bottom: 1px solid #333; margin-bottom: 20px; }
-        #uPic { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--accent); object-fit: cover; }
-        
-        .nav-link { padding: 12px; margin: 5px 0; border-radius: 10px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 10px; }
+        .sidebar { width: 260px; background: var(--side); padding: 20px; border-right: 1px solid #333; display: flex; flex-direction: column; }
+        .profile { text-align: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #333; }
+        #uPic { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--accent); object-fit: cover; }
+        .nav-link { padding: 12px; margin: 5px 0; border-radius: 10px; cursor: pointer; transition: 0.3s; }
         .nav-link:hover, .active { background: var(--accent); color: white; }
-
-        .main { flex: 1; padding: 30px; overflow-y: auto; }
-        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .card { background: var(--card); padding: 25px; border-radius: 20px; text-align: center; transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); }
-        .btn { background: var(--accent); color: white; border: none; padding: 10px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 15px; }
-
-        /* SOHBET SİSTEMİ */
-        .chat-box { position: fixed; bottom: 20px; right: 20px; width: 300px; background: white; border-radius: 15px; color: #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .chat-header { background: #3c40c6; color: white; padding: 12px; border-radius: 15px 15px 0 0; }
-        #chat-msgs { height: 180px; overflow-y: auto; padding: 10px; font-size: 13px; display: flex; flex-direction: column; gap: 8px; }
-        .msg { padding: 6px 10px; border-radius: 8px; max-width: 85%; word-wrap: break-word; }
-        .msg.sent { background: var(--accent); color: white; align-self: flex-end; }
-        .msg.received { background: #eee; align-self: flex-start; }
+        .main { flex: 1; padding: 40px; overflow-y: auto; }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .card { background: var(--card); padding: 30px; border-radius: 20px; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .btn { background: var(--accent); color: white; border: none; padding: 12px; width: 100%; border-radius: 10px; cursor: pointer; font-weight: bold; margin-top: 20px; }
     </style>
 </head>
 <body>
-
     <div class="sidebar">
-        <h2 style="color:var(--accent); text-align:center; margin-bottom:10px;">MATEMATİK İZİ</h2>
+        <h2 style="color:var(--accent); text-align:center; margin-bottom:20px;">MATEMATİK İZİ</h2>
         <div class="profile">
-            <img id="uPic" src=""><br>
-            <b id="uName" style="display:block; margin-top:10px;"></b>
+            <img id="uPic" src="">
+            <h3 id="uName" style="margin-top:10px; color:white;"></h3>
         </div>
-        <div class="nav-link active" onclick="location.href='dashboard.html'">🏠 Panel</div>
-        <div class="nav-link" onclick="location.href='kitapsun.html'">📚 Kitap Sunumları</div>
-        <div class="nav-link" onclick="location.href='vidsim.html'">🎬 Video & Simülasyon</div>
-        <div class="nav-link" onclick="location.href='sınavpan.html'">✍️ Sınav Paneli</div>
-        <a href="index.html" style="margin-top:auto; color:#ff5e57; text-decoration:none;">🚪 Güvenli Çıkış</a>
+        <div class="nav-link active" onclick="location.href='dashboard.html'">🏠 Ana Panel</div>
+        <div class="nav-link" onclick="location.href='kitapsun.html'">📚 Kitaplar</div>
+        <div class="nav-link" onclick="location.href='vidsim.html'">🧪 Atölyeler</div>
+        <div class="nav-link" onclick="location.href='sınavpan.html'">✍️ Sınav Merkezi</div>
     </div>
-
     <div class="main">
-        <div class="top-bar">
-            <h1>Hoş geldin, <span id="wName" style="color:var(--accent)"></span>!</h1>
-            <div style="background:#05c46b; padding:10px 20px; border-radius:10px; color:white; font-weight:bold;">1.250 XP</div>
-        </div>
-
-        <div class="grid">
-            <div class="card"><h3>📚 Kitaplar</h3><button class="btn" onclick="location.href='kitapsun.html'">Görüntüle</button></div>
-            <div class="card"><h3>🎬 Videolar</h3><button class="btn" onclick="location.href='vidsim.html'">İzle</button></div>
-            <div class="card"><h3>✍️ Sınavlar</h3><button class="btn" onclick="location.href='sınavpan.html'">Sınava Gir</button></div>
+        <h1 style="margin-bottom: 30px;">Hoş geldin, <span id="wName" style="color:var(--accent)"></span>!</h1>
+        <div class="card-grid">
+            <div class="card"><h3>Ders Sunumları</h3><button class="btn" onclick="location.href='kitapsun.html'">Hemen Başla</button></div>
+            <div class="card"><h3>Matematik Sınavı</h3><button class="btn" onclick="location.href='sınavpan.html'">Teste Başla</button></div>
         </div>
     </div>
-
-    <div class="chat-box">
-        <div class="chat-header">🗨️ Sınıf Sohbeti</div>
-        <div id="chat-msgs">
-            <div class="msg received"><b>Sistem:</b> Hoş geldin! Lütfen nazik olalım.</div>
-        </div>
-        <div style="padding:10px; display:flex; border-top:1px solid #eee;">
-            <input type="text" id="msgInp" placeholder="Mesaj yaz..." style="flex:1; border:none; outline:none;">
-            <button onclick="send()" style="border:none; color:var(--accent); background:none; font-weight:bold; cursor:pointer;">OK</button>
-        </div>
-    </div>
-
     <script>
-        // Bilgileri Getir
-        document.getElementById('uName').innerText = localStorage.getItem('m_izi_name');
-        document.getElementById('wName').innerText = localStorage.getItem('m_izi_name');
-        document.getElementById('uPic').src = localStorage.getItem('m_izi_img');
-
-        // AKILLI FİLTRE (SOHBET İÇİN)
-        const AkilliFiltre = {
-            yasakli: ["kufur", "argo", "kotu"], 
-            sansurle: function(metin) {
-                let sonuc = metin;
-                this.yasakli.forEach(k => {
-                    const regex = new RegExp(k, "gi");
-                    sonuc = sonuc.replace(regex, "***");
-                });
-                return sonuc;
-            }
+        window.onload = function() {
+            document.getElementById('uName').innerText = localStorage.getItem('m_izi_name');
+            document.getElementById('wName').innerText = localStorage.getItem('m_izi_name');
+            document.getElementById('uPic').src = localStorage.getItem('m_izi_img');
         };
-
-        function send() {
-            const inp = document.getElementById('msgInp');
-            const chat = document.getElementById('chat-msgs');
-            if(inp.value.trim() !== "") {
-                const temizMesaj = AkilliFiltre.sansurle(inp.value);
-                const div = document.createElement('div');
-                div.className = "msg sent";
-                div.innerHTML = `<b>Sen:</b> ${temizMesaj}`;
-                chat.appendChild(div);
-                inp.value = "";
-                chat.scrollTop = chat.scrollHeight;
-            }
-        }
     </script>
 </body>
 </html>
