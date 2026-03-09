@@ -2,195 +2,107 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matematik İzi | Panel</title>
     <style>
-        :root {
-            --dark-bg: #1e272e;
-            --sidebar-bg: #0f1419;
-            --accent: #ff9f43;
-            --text-light: #d2dae2;
-            --card-bg: #2f3542;
-        }
-
+        :root { --dark: #1e272e; --side: #0f1419; --accent: #ff9f43; --card: #2f3542; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: var(--dark); color: #d2dae2; display: flex; height: 100vh; overflow: hidden; }
 
-        body {
-            background-color: var(--dark-bg);
-            color: var(--text-light);
-            display: flex;
-            height: 100vh;
-        }
+        .sidebar { width: 260px; background: var(--side); padding: 20px; display: flex; flex-direction: column; border-right: 1px solid #333; }
+        .profile { text-align: center; padding: 20px 0; border-bottom: 1px solid #333; margin-bottom: 20px; }
+        #uPic { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--accent); object-fit: cover; }
+        
+        .nav-link { padding: 12px; margin: 5px 0; border-radius: 10px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 10px; }
+        .nav-link:hover, .active { background: var(--accent); color: white; }
 
-        /* Yan Menü */
-        .sidebar {
-            width: 260px;
-            background-color: var(--sidebar-bg);
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            border-right: 1px solid #333;
-        }
-
-        .sidebar h2 {
-            color: var(--accent);
-            text-align: center;
-            margin-bottom: 30px;
-            letter-spacing: 1px;
-        }
-
-        .user-info {
-            text-align: center;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #333;
-        }
-
-        #uPic {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid var(--accent);
-            object-fit: cover;
-            margin-bottom: 10px;
-        }
-
-        .nav-menu { flex-grow: 1; }
-
-        .nav-item {
-            padding: 12px 15px;
-            border-radius: 10px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .nav-item:hover { background-color: var(--accent); color: white; }
-        .nav-item.active { background-color: var(--accent); color: white; }
-
-        /* Ana İçerik */
-        .main-content {
-            flex-grow: 1;
-            padding: 30px;
-            overflow-y: auto;
-        }
-
-        .header-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .xp-pill {
-            background: #05c46b;
-            padding: 8px 18px;
-            border-radius: 20px;
-            font-weight: bold;
-            color: white;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: 0.3s;
-            text-align: center;
-        }
-
+        .main { flex: 1; padding: 30px; overflow-y: auto; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .card { background: var(--card); padding: 25px; border-radius: 20px; text-align: center; transition: 0.3s; }
         .card:hover { transform: translateY(-5px); }
+        .btn { background: var(--accent); color: white; border: none; padding: 10px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 15px; }
 
-        .card h3 { color: var(--accent); margin-bottom: 15px; }
-
-        .card button {
-            background: var(--accent);
-            border: none;
-            padding: 10px 20px;
-            color: white;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 15px;
-        }
-
-        .logout-btn {
-            color: #ff5e57;
-            text-decoration: none;
-            font-weight: bold;
-            text-align: center;
-            padding: 10px;
-        }
+        /* SOHBET SİSTEMİ */
+        .chat-box { position: fixed; bottom: 20px; right: 20px; width: 300px; background: white; border-radius: 15px; color: #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .chat-header { background: #3c40c6; color: white; padding: 12px; border-radius: 15px 15px 0 0; }
+        #chat-msgs { height: 180px; overflow-y: auto; padding: 10px; font-size: 13px; display: flex; flex-direction: column; gap: 8px; }
+        .msg { padding: 6px 10px; border-radius: 8px; max-width: 85%; word-wrap: break-word; }
+        .msg.sent { background: var(--accent); color: white; align-self: flex-end; }
+        .msg.received { background: #eee; align-self: flex-start; }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <h2>MATEMATİK İZİ</h2>
-        
-        <div class="user-info">
-            <img id="uPic" src="" alt="Profil">
-            <h3 id="uName">Yükleniyor...</h3>
-            <p style="font-size: 12px; color: #888;">Görevli Öğrenci</p>
+        <h2 style="color:var(--accent); text-align:center; margin-bottom:10px;">MATEMATİK İZİ</h2>
+        <div class="profile">
+            <img id="uPic" src=""><br>
+            <b id="uName" style="display:block; margin-top:10px;"></b>
         </div>
-
-        <div class="nav-menu">
-            <div class="nav-item active" onclick="location.href='dashboard.html'">🏠 Panel</div>
-            <div class="nav-item" onclick="location.href='kitapsun.html'">📚 Kitap Sunumları</div>
-            <div class="nav-item" onclick="location.href='vidsim.html'">🎬 Video & Simülasyon</div>
-            <div class="nav-item" onclick="location.href='sınavpan.html'">✍️ Sınav Paneli</div>
-        </div>
-
-        <a href="index.html" class="logout-btn">Çıkış Yap</a>
+        <div class="nav-link active" onclick="location.href='dashboard.html'">🏠 Panel</div>
+        <div class="nav-link" onclick="location.href='kitapsun.html'">📚 Kitap Sunumları</div>
+        <div class="nav-link" onclick="location.href='vidsim.html'">🎬 Video & Simülasyon</div>
+        <div class="nav-link" onclick="location.href='sınavpan.html'">✍️ Sınav Paneli</div>
+        <a href="index.html" style="margin-top:auto; color:#ff5e57; text-decoration:none;">🚪 Güvenli Çıkış</a>
     </div>
 
-    <div class="main-content">
-        <div class="header-bar">
-            <h1>Hoş geldin, <span id="wName">...</span> 👋</h1>
-            <div class="xp-pill">PUAN: 1.250 XP</div>
+    <div class="main">
+        <div class="top-bar">
+            <h1>Hoş geldin, <span id="wName" style="color:var(--accent)"></span>!</h1>
+            <div style="background:#05c46b; padding:10px 20px; border-radius:10px; color:white; font-weight:bold;">1.250 XP</div>
         </div>
 
-        <div class="grid-container">
-            <div class="card">
-                <h3>Eğitim Kitapları</h3>
-                <p>Ünitelerin dijital sunumlarına buradan ulaşabilirsin.</p>
-                <button onclick="location.href='kitapsun.html'">İncele</button>
-            </div>
+        <div class="grid">
+            <div class="card"><h3>📚 Kitaplar</h3><button class="btn" onclick="location.href='kitapsun.html'">Görüntüle</button></div>
+            <div class="card"><h3>🎬 Videolar</h3><button class="btn" onclick="location.href='vidsim.html'">İzle</button></div>
+            <div class="card"><h3>✍️ Sınavlar</h3><button class="btn" onclick="location.href='sınavpan.html'">Sınava Gir</button></div>
+        </div>
+    </div>
 
-            <div class="card" style="border-top: 4px solid #3c40c6;">
-                <h3>Atölye & Videolar</h3>
-                <p>Simülasyonlar ve konu anlatım videoları seni bekliyor.</p>
-                <button onclick="location.href='vidsim.html'" style="background: #3c40c6;">Başlat</button>
-            </div>
-
-            <div class="card" style="border-top: 4px solid #05c46b;">
-                <h3>Sınav Merkezi</h3>
-                <p>Haftalık denemeler ve konu tarama testleri.</p>
-                <button onclick="location.href='sınavpan.html'" style="background: #05c46b;">Sınava Gir</button>
-            </div>
+    <div class="chat-box">
+        <div class="chat-header">🗨️ Sınıf Sohbeti</div>
+        <div id="chat-msgs">
+            <div class="msg received"><b>Sistem:</b> Hoş geldin! Lütfen nazik olalım.</div>
+        </div>
+        <div style="padding:10px; display:flex; border-top:1px solid #eee;">
+            <input type="text" id="msgInp" placeholder="Mesaj yaz..." style="flex:1; border:none; outline:none;">
+            <button onclick="send()" style="border:none; color:var(--accent); background:none; font-weight:bold; cursor:pointer;">OK</button>
         </div>
     </div>
 
     <script>
-        // Sayfa yüklendiğinde bilgileri çek
-        window.onload = function() {
-            const savedName = localStorage.getItem('m_izi_name') || "Gezgin";
-            const savedImg = localStorage.getItem('m_izi_img') || "https://api.dicebear.com/7.x/bottts/svg?seed=Math";
+        // Bilgileri Getir
+        document.getElementById('uName').innerText = localStorage.getItem('m_izi_name');
+        document.getElementById('wName').innerText = localStorage.getItem('m_izi_name');
+        document.getElementById('uPic').src = localStorage.getItem('m_izi_img');
 
-            document.getElementById('uName').innerText = savedName;
-            document.getElementById('wName').innerText = savedName;
-            document.getElementById('uPic').src = savedImg;
+        // AKILLI FİLTRE (SOHBET İÇİN)
+        const AkilliFiltre = {
+            yasakli: ["kufur", "argo", "kotu"], 
+            sansurle: function(metin) {
+                let sonuc = metin;
+                this.yasakli.forEach(k => {
+                    const regex = new RegExp(k, "gi");
+                    sonuc = sonuc.replace(regex, "***");
+                });
+                return sonuc;
+            }
         };
+
+        function send() {
+            const inp = document.getElementById('msgInp');
+            const chat = document.getElementById('chat-msgs');
+            if(inp.value.trim() !== "") {
+                const temizMesaj = AkilliFiltre.sansurle(inp.value);
+                const div = document.createElement('div');
+                div.className = "msg sent";
+                div.innerHTML = `<b>Sen:</b> ${temizMesaj}`;
+                chat.appendChild(div);
+                inp.value = "";
+                chat.scrollTop = chat.scrollHeight;
+            }
+        }
     </script>
 </body>
 </html>
