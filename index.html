@@ -5,13 +5,13 @@
     <title>Matematik İzi | Giriş</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: #0f0c29; background: linear-gradient(135deg, #0f0c29, #302b63); height: 100vh; display: flex; align-items: center; justify-content: center; color: white; }
+        body { background: #0f0c29; height: 100vh; display: flex; align-items: center; justify-content: center; color: white; }
         .login-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); padding: 40px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); width: 380px; text-align: center; }
-        h1 span { color: #ff9f43; }
         .avatar-box { width: 110px; height: 110px; border-radius: 50%; border: 3px solid #ff9f43; margin: 0 auto 20px; overflow: hidden; position: relative; background: #222; }
         #preview { width: 100%; height: 100%; object-fit: cover; }
+        .upload-label { position: absolute; bottom: 0; width: 100%; background: rgba(255,159,67,0.8); font-size: 10px; cursor: pointer; padding: 5px; }
         input[type="text"] { width: 100%; padding: 12px; border-radius: 10px; border: none; margin: 20px 0; outline: none; }
-        .btn { width: 100%; padding: 15px; background: #ff9f43; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; font-size: 16px; }
+        .btn { width: 100%; padding: 15px; background: #ff9f43; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -19,25 +19,39 @@
         <h1>MATEMATİK <span>İZİ</span></h1>
         <div class="avatar-box">
             <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Math" id="preview">
-            <label for="imgInp" style="position:absolute; bottom:0; width:100%; background:rgba(255,159,67,0.8); font-size:10px; cursor:pointer;">SEÇ</label>
+            <label for="imgInp" class="upload-label">RESİM SEÇ</label>
             <input type="file" id="imgInp" accept="image/*" style="display:none">
         </div>
         <input type="text" id="uName" placeholder="Adınız Soyadınız" required>
         <button class="btn" onclick="save()">Başla →</button>
     </div>
+
     <script>
+        // Basit küfür filtresi (Buraya istediğin kelimeleri ekleyebilirsin)
+        const yasakliKelimeler = ["kufur1", "kufur2", "kotu3"]; // Örnek olarak yazıldı
+
         let photo = "";
         document.getElementById('imgInp').onchange = function(e) {
             let r = new FileReader();
             r.onload = () => { document.getElementById('preview').src = r.result; photo = r.result; };
             r.readAsDataURL(e.target.files[0]);
         };
+
         function save() {
-            const name = document.getElementById('uName').value;
-            if(!name) return alert("İsim yazmalısın!");
-            localStorage.setItem('m_izi_name', name);
-            localStorage.setItem('m_izi_img', photo || document.getElementById('preview').src);
-            window.location.href = 'dashboard.html';
+            const name = document.getElementById('uName').value.trim();
+            
+            // Küfür kontrolü
+            const kontrol = yasakliKelimeler.some(kelime => name.toLowerCase().includes(kelime));
+            
+            if(!name) {
+                alert("Lütfen adını yaz!");
+            } else if(kontrol) {
+                alert("Lütfen uygun bir isim kullan!");
+            } else {
+                localStorage.setItem('m_izi_name', name);
+                localStorage.setItem('m_izi_img', photo || document.getElementById('preview').src);
+                window.location.href = 'dashboard.html';
+            }
         }
     </script>
 </body>
