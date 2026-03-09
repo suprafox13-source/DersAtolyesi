@@ -2,17 +2,69 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Sınav Paneli</title>
+    <title>Matematik İzi | Sınav Paneli</title>
     <style>
-        body { background: #1e272e; color: white; font-family: sans-serif; padding: 40px; }
-        .exam { background: #2f3542; padding: 20px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; }
-        .back { color: #ff9f43; cursor: pointer; margin-bottom: 20px; display: block; }
+        :root { --dark: #1e272e; --accent: #ff9f43; --card: #2f3542; --success: #05c46b; }
+        body { background: var(--dark); color: white; font-family: 'Segoe UI', sans-serif; padding: 40px; margin: 0; }
+        .back-btn { color: var(--accent); text-decoration: none; font-weight: bold; cursor: pointer; display: inline-block; margin-bottom: 20px; }
+        .exam-container { max-width: 800px; margin: 0 auto; }
+        .exam-card { 
+            background: var(--card); 
+            padding: 25px; 
+            border-radius: 20px; 
+            margin-bottom: 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            border-left: 5px solid var(--accent);
+        }
+        .exam-info h3 { margin: 0 0 5px 0; color: var(--accent); }
+        .exam-info p { margin: 0; font-size: 14px; color: #aaa; }
+        .btn-start { 
+            background: var(--success); 
+            color: white; 
+            border: none; 
+            padding: 12px 25px; 
+            border-radius: 10px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: 0.3s; 
+        }
+        .btn-start:hover { transform: scale(1.05); background: #049452; }
+        .badge { background: #3c40c6; padding: 4px 8px; border-radius: 5px; font-size: 12px; margin-right: 10px; }
     </style>
 </head>
 <body>
-    <a class="back" onclick="location.href='dashboard.html'">← Geri Dön</a>
-    <h1>✍️ Aktif Sınavlar</h1>
-    <div class="exam"><span>Haftalık Deneme Sınavı</span> <button onclick="alert('Sınav Başlıyor...')">Başlat</button></div>
-    <div class="exam"><span>Konu Tarama Testi</span> <button>Başlat</button></div>
+
+    <div class="exam-container">
+        <a class="back-btn" onclick="location.href='dashboard.html'">← Panele Geri Dön</a>
+        
+        <h1 style="margin-bottom: 30px;">✍️ Sınav Paneli</h1>
+
+        <div class="exam-card">
+            <div class="exam-info">
+                <h3><span class="badge">YENİ</span> Haftalık LGS Denemesi - 1</h3>
+                <p>20 Matematik Sorusu | 40 Dakika | Puan: 100 XP</p>
+            </div>
+            <button class="btn-start" onclick="alert('Sınav Başlatılıyor... Başarılar!')">Sınava Başla</button>
+        </div>
+
+        <div class="exam-card">
+            <div class="exam-info">
+                <h3>Üslü Sayılar Tarama Testi</h3>
+                <p>15 Soru | 30 Dakika | Puan: 50 XP</p>
+            </div>
+            <button class="btn-start" onclick="alert('Test Yükleniyor...')">Sınava Başla</button>
+        </div>
+
+        <div class="exam-card" style="opacity: 0.7; border-left-color: #57606f;">
+            <div class="exam-info">
+                <h3>Geçmiş Sınav: Çarpanlar ve Katlar</h3>
+                <p>Tamamlandı | Başarı Oranı: %90</p>
+            </div>
+            <button class="btn-start" style="background: #57606f;">Sonuçları Gör</button>
+        </div>
+    </div>
+
 </body>
 </html>
