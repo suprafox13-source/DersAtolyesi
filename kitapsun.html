@@ -2,50 +2,19 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Matematik İzi | Kitap Sunumları</title>
+    <title>Kitap Sunumları</title>
     <style>
-        :root { --dark: #1e272e; --accent: #ff9f43; --card: #2f3542; }
-        body { background: var(--dark); color: white; font-family: 'Segoe UI', sans-serif; padding: 30px; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
-        .book-card { background: var(--card); border-radius: 15px; padding: 20px; text-align: center; border-bottom: 4px solid var(--accent); transition: 0.3s; }
-        .book-card:hover { transform: translateY(-5px); }
-        .book-card img { width: 100px; margin-bottom: 15px; }
-        .btn-view { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; }
-        .back-btn { color: var(--accent); text-decoration: none; font-weight: bold; }
+        body { background: #1e272e; color: white; font-family: sans-serif; padding: 40px; }
+        .card { background: #2f3542; padding: 20px; border-radius: 15px; width: 200px; text-align: center; border-bottom: 4px solid #ff9f43; }
+        .back { color: #ff9f43; cursor: pointer; margin-bottom: 20px; display: block; }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>📚 Kitap Sunumları</h1>
-        <a href="dashboard.html" class="back-btn">← Panele Dön</a>
-    </div>
-
-    <div class="grid">
-        <div class="book-card">
-            <img src="https://cdn-icons-png.flaticon.com/512/3389/3389081.png" alt="Kitap">
-            <h3>5. Sınıf Matematik</h3>
-            <p>Sayılar ve İşlemler</p>
-            <button class="btn-view" onclick="alert('Sunum Yükleniyor...')">Sunumu Aç</button>
-        </div>
-        <div class="book-card">
-            <img src="https://cdn-icons-png.flaticon.com/512/3389/3389081.png" alt="Kitap">
-            <h3>6. Sınıf Matematik</h3>
-            <p>Oran ve Orantı</p>
-            <button class="btn-view">Sunumu Aç</button>
-        </div>
-        <div class="book-card">
-            <img src="https://cdn-icons-png.flaticon.com/512/3389/3389081.png" alt="Kitap">
-            <h3>7. Sınıf Matematik</h3>
-            <p>Rasyonel Sayılar</p>
-            <button class="btn-view">Sunumu Aç</button>
-        </div>
-        <div class="book-card">
-            <img src="https://cdn-icons-png.flaticon.com/512/3389/3389081.png" alt="Kitap">
-            <h3>8. Sınıf Matematik</h3>
-            <p>LGS: Üslü İfadeler</p>
-            <button class="btn-view">Sunumu Aç</button>
-        </div>
+    <a class="back" onclick="location.href='dashboard.html'">← Geri Dön</a>
+    <h1>📚 Kitap Sunumları</h1>
+    <div style="display:flex; gap:20px; margin-top:20px;">
+        <div class="card"><h3>5. Sınıf</h3><button style="margin-top:10px" onclick="alert('Yükleniyor...')">Aç</button></div>
+        <div class="card"><h3>6. Sınıf</h3><button style="margin-top:10px">Aç</button></div>
     </div>
 </body>
 </html>
