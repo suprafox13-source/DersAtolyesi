@@ -1,50 +1,6 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <title>Matematik İzi | Panel</title>
-    <style>
-        :root { --dark: #1e272e; --accent: #ff9f43; --card: #2f3542; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: var(--dark); color: #d2dae2; display: flex; height: 100vh; }
-        .sidebar { width: 250px; background: #000; padding: 20px; border-right: 1px solid #333; }
-        .profile-img { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; }
-        .nav-link { padding: 12px; cursor: pointer; border-radius: 8px; margin-top: 5px; transition: 0.3s; }
-        .nav-link:hover, .active { background: var(--accent); color: white; }
-        .main { flex: 1; padding: 30px; overflow-y: auto; }
-        .stats { background: var(--card); padding: 20px; border-radius: 20px; display: flex; justify-content: space-between; margin-bottom: 25px; border-left: 8px solid var(--accent); }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .box { background: var(--card); padding: 20px; border-radius: 15px; text-align: center; }
-        .btn-card { background: var(--accent); border: none; padding: 10px; border-radius: 8px; color: white; width: 100%; cursor: pointer; margin-top: 15px; font-weight: bold; }
-    </style>
-</head>
-<body>
-    <div class="sidebar">
-        <h2 style="color:var(--accent); text-align:center; margin-bottom:20px;">MATEMATİK İZİ</h2>
-        <div style="text-align:center; margin-bottom:30px;">
-            <img id="uPic" class="profile-img"><br>
-            <b id="uName"></b>
-        </div>
-        <div class="nav-link active" onclick="location.href='dashboard.html'">🏠 Panel</div>
-        <div class="nav-link" onclick="location.href='kitapsun.html'">📚 Kitaplar</div>
-        <div class="nav-link" onclick="location.href='vidsim.html'">🎬 Simülasyonlar</div>
-        <div class="nav-link" onclick="location.href='sinavpan.html'">✍️ Sınavlar</div>
-    </div>
-    <div class="main">
-        <div class="stats">
-            <h2>Hoş geldin, <span id="wName"></span>! 👋</h2>
-            <div style="background:#05c46b; padding:10px; border-radius:10px; color:white;">2,850 XP</div>
-        </div>
-        <div class="grid">
-            <div class="box"><h3>📚 Kitap Sunumları</h3><button class="btn-card" onclick="location.href='kitapsun.html'">Aç</button></div>
-            <div class="box"><h3>🧪 Video & Simülasyon</h3><button class="btn-card" onclick="location.href='vidsim.html'">İzle/Uygula</button></div>
-            <div class="box"><h3>✍️ Sınav Paneli</h3><button class="btn-card" onclick="location.href='sinavpan.html'">Sınava Gir</button></div>
-        </div>
-    </div>
-    <script>
-        document.getElementById('uName').innerText = localStorage.getItem('m_izi_name') || "Gezgin";
-        document.getElementById('wName').innerText = localStorage.getItem('m_izi_name') || "Gezgin";
-        document.getElementById('uPic').src = localStorage.getItem('m_izi_img') || "";
-    </script>
-</body>
-</html>
+<div class="nav-link" onclick="location.href='sınavpan.html'">✍️ Sınavlar</div>
+
+<div class="box">
+    <h3>✍️ Sınav Paneli</h3>
+    <button class="btn-card" onclick="location.href='sınavpan.html'">Sınava Gir</button>
+</div>
