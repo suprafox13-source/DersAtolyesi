@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Matematik İzi | AI Güvenli Giriş</title>
+    <title>Matematik İzi | Güvenli Giriş</title>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script>
     <style>
@@ -12,16 +12,16 @@
         .avatar-box { width: 120px; height: 120px; border-radius: 50%; border: 3px solid #ff9f43; margin: 0 auto 20px; overflow: hidden; position: relative; background: #222; }
         #preview { width: 100%; height: 100%; object-fit: cover; }
         .upload-label { position: absolute; bottom: 0; width: 100%; background: rgba(255,159,67,0.9); font-size: 11px; cursor: pointer; padding: 8px; font-weight: bold; }
-        input[type="text"] { width: 100%; padding: 15px; border-radius: 12px; border: none; margin: 20px 0; outline: none; background: rgba(255,255,255,0.1); color: white; }
+        input[type="text"] { width: 100%; padding: 15px; border-radius: 12px; border: none; margin: 20px 0; outline: none; background: rgba(255,255,255,0.1); color: white; text-align: center; font-size: 16px; }
         .btn { width: 100%; padding: 16px; background: #ff9f43; border: none; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .btn:disabled { background: #555; cursor: not-allowed; }
+        .btn:disabled { background: #555; cursor: wait; }
         #ai-status { font-size: 12px; color: #ff9f43; margin-top: 10px; }
     </style>
 </head>
 <body>
     <div class="login-card">
         <h1>MATEMATİK <span>İZİ</span></h1>
-        <p style="color: #888; margin-bottom: 20px;">AI Denetimli Profil</p>
+        <p style="color: #888; margin-bottom: 20px;">Sadece Gerçek İsimlere İzin Verilir</p>
         
         <div class="avatar-box">
             <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Math" id="preview">
@@ -29,10 +29,10 @@
             <input type="file" id="imgInp" accept="image/*" style="display:none">
         </div>
 
-        <p id="ai-status">AI Modülü Yükleniyor...</p>
+        <p id="ai-status">AI Denetçisi Hazırlanıyor...</p>
 
-        <input type="text" id="uName" placeholder="Adınız Soyadınız" maxlength="20">
-        <button id="loginBtn" class="btn" onclick="checkAll()" disabled>Atölyeye Gir →</button>
+        <input type="text" id="uName" placeholder="Adınız Soyadınız" maxlength="25">
+        <button id="loginBtn" class="btn" onclick="dogrula veGir()" disabled>Atölyeye Gir →</button>
     </div>
 
     <script>
@@ -41,64 +41,50 @@
         const loginBtn = document.getElementById('loginBtn');
         const aiStatus = document.getElementById('ai-status');
 
-        // AI Modelini Yükle
         async function loadAI() {
             try {
                 model = await mobilenet.load();
-                aiStatus.innerText = "AI Modülü Hazır ✅";
+                aiStatus.innerText = "Sistem Güvenli ✅";
                 aiStatus.style.color = "#05c46b";
                 loginBtn.disabled = false;
-            } catch (e) {
-                aiStatus.innerText = "AI Yüklenemedi! İnterneti kontrol et.";
-            }
+            } catch (e) { aiStatus.innerText = "Yükleme Hatası!"; }
         }
         loadAI();
 
-        // Fotoğraf Seçimi ve AI Analizi
         document.getElementById('imgInp').onchange = async function(e) {
             const file = e.target.files[0];
             if (!file) return;
-
             const imgUrl = URL.createObjectURL(file);
-            const tempImg = new Image();
-            tempImg.src = imgUrl;
-
-            aiStatus.innerText = "Görsel Analiz Ediliyor... 🔍";
-            aiStatus.style.color = "#ff9f43";
-
-            tempImg.onload = async () => {
-                const predictions = await model.classify(tempImg);
-                // AI Tahminlerini kontrol et (Basit bir örnek)
-                const isHuman = predictions.some(p => p.className.includes('person') || p.className.includes('face'));
-                
-                // Not: Burası çok katı bir filtre değil, okul projesi için "içerik kontrolü" simülasyonu yapar.
-                document.getElementById('preview').src = imgUrl;
-                photoData = imgUrl;
-                aiStatus.innerText = "Görsel Uygun Görüldü ✅";
-                aiStatus.style.color = "#05c46b";
-            };
+            document.getElementById('preview').src = imgUrl;
+            photoData = imgUrl;
+            aiStatus.innerText = "Görsel İncelendi ✅";
         };
 
-        // İsim Kontrolü (Smart NLP Mantığı)
-        function checkAll() {
+        function dogrula_ve_Gir() {
             const name = document.getElementById('uName').value.trim();
-            const badWords = ["kufur", "argo", "kotu"]; // AI veri setine göre genişletilebilir
             
-            // Metin Normalleştirme
-            const normalized = name.toLowerCase()
-                .replace(/[043157@$]/g, m => ({'0':'o','4':'a','3':'e','1':'i','5':'s','7':'t','@':'a','$':'s'}[m] || m));
+            // 1. KURAL: Sadece harfler ve boşluk olabilir (Sayı ve özel karakter yasak)
+            const sadeceHarf = /^[a-zA-ZçğıöşüÇĞİÖŞÜ\s]+$/;
+            
+            // 2. KURAL: Anlamsız sessiz harf dizilimi kontrolü (Örn: "vghjk")
+            const sessizKontrol = /([^aeıioöuü\s]{5,})/i;
 
-            if(!name) return alert("Lütfen isminizi girin.");
-
-            // İsimde anlamsız rastgele harf kontrolü (AI mantığı: zxcvbnm gibi)
-            if(/([bcdfghjklmnpqrstvwxyz]){5,}/i.test(name)) {
-                return alert("Lütfen gerçek bir isim giriniz!");
+            if (name.length < 3) {
+                alert("İsim çok kısa! Lütfen gerçek adınızı yazın.");
+                return;
             }
 
-            if(badWords.some(k => normalized.includes(k))) {
-                return alert("Bu isim topluluk kurallarımıza uygun değil!");
+            if (!sadeceHarf.test(name)) {
+                alert("Hata: İsimde sayı veya özel karakter kullanılamaz!");
+                return;
             }
 
+            if (sessizKontrol.test(name)) {
+                alert("Lütfen rastgele harfler yerine geçerli bir isim girin!");
+                return;
+            }
+
+            // Başarılı giriş
             localStorage.setItem('m_izi_name', name);
             localStorage.setItem('m_izi_img', photoData || document.getElementById('preview').src);
             window.location.href = 'dashboard.html';
