@@ -2,141 +2,191 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Matematik İzi | Dashboard</title>
+    <title>Matematik İzi | Profilim</title>
     <style>
         :root {
-            --eba-blue: #0088cc;
-            --eba-dark: #2c3e50;
-            --bg-light: #f4f7f8;
-            --text-main: #555;
+            --eba-mavi: #0088cc;
+            --eba-koyu: #2c3e50;
+            --eba-gri: #f4f7f8;
+            --eba-border: #dce3e6;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { background-color: var(--bg-light); display: flex; color: var(--text-main); height: 100vh; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background-color: var(--eba-gri); display: flex; flex-direction: column; height: 100vh; }
 
-        /* Sol Menü */
-        .sidebar { width: 240px; background: white; border-right: 1px solid #ddd; display: flex; flex-direction: column; }
-        .eba-logo { padding: 20px; text-align: center; background: var(--eba-blue); color: white; font-weight: bold; font-size: 24px; }
+        /* Üst Header Bar */
+        .header {
+            background-color: var(--eba-mavi);
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* İkinci Arama Barı */
+        .sub-header {
+            background-color: var(--eba-koyu);
+            padding: 8px 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo-section { display: flex; align-items: center; gap: 10px; color: white; font-weight: bold; font-style: italic; font-size: 22px; }
+        .search-container { position: relative; flex: 1; max-width: 500px; margin: 0 40px; }
+        .search-input { width: 100%; padding: 6px 35px; border-radius: 4px; border: none; outline: none; }
+        .user-top-info { display: flex; align-items: center; gap: 15px; color: white; font-size: 13px; }
+
+        /* Ana Gövde */
+        .container { display: flex; flex: 1; overflow: hidden; }
+
+        /* Sol Menü Paneli */
+        .sidebar { width: 220px; background: white; border-right: 1px solid var(--eba-border); display: flex; flex-direction: column; }
+        .profile-card { text-align: center; padding: 20px 10px; border-bottom: 1px solid #eee; }
+        .profile-img-box { position: relative; width: 100px; height: 100px; margin: 0 auto 10px; }
+        #uPic { width: 100%; height: 100%; border-radius: 50%; border: 3px solid #eee; object-fit: cover; }
+        .xp-circle { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); background: white; border-radius: 10px; padding: 2px 8px; font-size: 11px; border: 1px solid #ddd; color: var(--eba-mavi); font-weight: bold; }
+        .rozetler { display: flex; justify-content: center; gap: 5px; margin: 10px 0; }
+        .rozet { width: 25px; height: 25px; border-radius: 50%; background: #eee; }
         
-        .profile-section { padding: 20px; text-align: center; border-bottom: 1px solid #eee; }
-        .avatar-container { position: relative; width: 100px; height: 100px; margin: 0 auto 10px; }
-        #uPic { width: 100%; height: 100%; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); object-fit: cover; }
-        .point-badge { background: #ff9f43; color: white; border-radius: 15px; padding: 2px 10px; font-size: 12px; position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%); }
+        .nav-menu { flex: 1; overflow-y: auto; }
+        .nav-item { padding: 10px 20px; display: flex; align-items: center; gap: 10px; font-size: 13px; color: #444; cursor: pointer; border-bottom: 1px solid #f9f9f9; }
+        .nav-item:hover { background: #f0f7ff; color: var(--eba-mavi); }
+        .nav-item.active { background: var(--eba-mavi); color: white; }
 
-        .nav-menu { flex: 1; padding: 10px 0; }
-        .nav-item { padding: 12px 25px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: 0.2s; font-size: 14px; color: var(--eba-dark); }
-        .nav-item:hover { background: #f0f0f0; border-left: 4px solid var(--eba-blue); }
-        .nav-item.active { background: var(--eba-blue); color: white; }
+        /* Orta Panel */
+        .main-panel { flex: 1; padding: 20px; overflow-y: auto; display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+        
+        .card { background: white; border: 1px solid var(--eba-border); border-radius: 4px; margin-bottom: 20px; }
+        .card-header { padding: 10px 15px; border-bottom: 1px solid #eee; font-size: 14px; font-weight: bold; color: #333; }
+        
+        /* Ders Kutuları */
+        .lesson-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; }
+        .lesson-item { height: 100px; background: #333; border-radius: 4px; position: relative; overflow: hidden; cursor: pointer; }
+        .lesson-item img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+        .lesson-item span { position: absolute; bottom: 8px; left: 8px; color: white; font-size: 12px; font-weight: bold; text-shadow: 1px 1px 2px black; }
 
-        /* Ana İçerik Alanı */
-        .content { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-        .top-nav { height: 60px; background: var(--eba-dark); display: flex; align-items: center; padding: 0 20px; color: white; justify-content: space-between; }
-        .search-bar { background: rgba(255,255,255,0.2); border-radius: 5px; padding: 5px 15px; width: 400px; border: none; color: white; }
+        /* İstatistik Halkası */
+        .stats-box { padding: 20px; text-align: center; }
+        .chart-circle { width: 140px; height: 140px; border-radius: 50%; border: 12px solid #eef2f3; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        .chart-circle b { font-size: 28px; color: #333; }
+        .chart-circle span { font-size: 12px; color: #888; }
 
-        .dashboard-main { padding: 20px; display: grid; grid-template-columns: 2fr 1fr; gap: 20px; overflow-y: auto; }
+        /* Takvim Alanı */
+        .calendar-card { padding: 15px; text-align: center; }
+        .cal-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; color: var(--eba-mavi); }
+        .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; font-size: 12px; }
+        .day { padding: 5px; }
+        .day.today { background: var(--eba-mavi); color: white; border-radius: 50%; }
 
-        /* Kart Yapıları */
-        .card { background: white; border-radius: 5px; border: 1px solid #ddd; padding: 20px; margin-bottom: 20px; }
-        .card-title { font-size: 16px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; color: var(--eba-blue); }
-
-        .lessons-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .lesson-box { height: 100px; background: #eee; border-radius: 5px; position: relative; overflow: hidden; cursor: pointer; }
-        .lesson-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
-        .lesson-name { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.6); color: white; font-size: 11px; padding: 5px; }
-
-        .stats-circle { width: 150px; height: 150px; border-radius: 50%; border: 15px solid #eee; margin: 20px auto; display: flex; align-items: center; justify-content: center; flex-direction: column; }
-        .stats-circle b { font-size: 24px; color: var(--eba-blue); }
-
-        /* Sağ Takvim ve Yaklaşanlar */
-        .calendar-card { font-size: 13px; text-align: center; }
-        .event-list { font-size: 13px; list-style: none; }
-        .event-item { padding: 10px 0; border-bottom: 1px solid #eee; }
-        .event-item b { color: var(--eba-blue); display: block; }
+        /* Alt İleti Alanı */
+        .post-input { padding: 15px; display: flex; gap: 10px; align-items: center; }
+        .post-input input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 20px; outline: none; font-size: 13px; }
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="eba-logo">MATEMATİK İZİ</div>
-        <div class="profile-section">
-            <div class="avatar-container">
-                <img id="uPic" src="" alt="Profil">
-                <div class="point-badge"><span id="uXP">125</span> puan</div>
-            </div>
-            <h3 id="uName">Yükleniyor...</h3>
-            <p style="font-size: 11px; color: #999;">Cumhuriyet Ortaokulu</p>
+    <div class="header">Eğitim Bilişim Ağı / Profilim Sayfamızı Keşfedelim</div>
+
+    <div class="sub-header">
+        <div class="logo-section">eba</div>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Ne aramıştınız?">
         </div>
-        <div class="nav-menu">
-            <div class="nav-item active">👤 Sayfam</div>
-            <div class="nav-item" onclick="location.href='kitapsun.html'">📚 Dersler</div>
-            <div class="nav-item" onclick="location.href='sınavpan.html'">✍️ Sınavlar</div>
-            <div class="nav-item" onclick="location.href='vidsim.html'">🎬 Kütüphane</div>
-            <div class="nav-item">📅 Takvim</div>
+        <div class="user-top-info">
+            <span>✉️</span> <span>🔔</span>
+            <span id="topName">Beril Çelik</span>
+            <img src="" id="uPicTop" style="width:30px; height:30px; border-radius:50%; background:#eee;">
         </div>
-        <div style="padding: 20px; font-size: 12px; color: #ccc;">© 2026 Matematik İzi</div>
     </div>
 
-    <div class="content">
-        <div class="top-nav">
-            <input type="text" class="search-bar" placeholder="Ne aramıştınız?">
-            <div style="display: flex; gap: 20px; align-items: center;">
-                <span>🔔</span>
-                <span>✉️</span>
-                <b id="wName">...</b>
+    <div class="container">
+        <div class="sidebar">
+            <div class="profile-card">
+                <div class="profile-img-box">
+                    <img id="uPic" src="">
+                    <div class="xp-circle"><span id="pointVal">37</span> puan</div>
+                </div>
+                <div class="rozetler">
+                    <div class="rozet" style="background:#cd7f32"></div>
+                    <div class="rozet" style="background:#c0c0c0"></div>
+                    <div class="rozet" style="background:#ffd700"></div>
+                </div>
+                <h3 id="uName">Beril Çelik</h3>
+                <p style="font-size: 11px; color: #888;">Cumhuriyet Ortaokulu</p>
+            </div>
+            
+            <div class="nav-menu">
+                <div class="nav-item active">👤 Sayfam</div>
+                <div class="nav-item">📁 EBA Portfolyo</div>
+                <div class="nav-item" onclick="location.href='kitapsun.html'">▶️ Dersler</div>
+                <div class="nav-item" onclick="location.href='sınavpan.html'">📝 Sınavlar</div>
+                <div class="nav-item" onclick="location.href='vidsim.html'">📚 Kütüphane</div>
+                <div class="nav-item">🔍 Çalışmalarım</div>
+                <div class="nav-item">📅 Takvim</div>
             </div>
         </div>
 
-        <div class="dashboard-main">
-            <div class="left-col">
+        <div class="main-panel">
+            <div class="left-content">
                 <div class="card">
-                    <div class="card-title">Son Çalıştığın Dersler</div>
-                    <div class="lessons-grid">
-                        <div class="lesson-box">
+                    <div class="lesson-grid">
+                        <div class="lesson-item">
                             <img src="https://images.unsplash.com/photo-1509228468518-180dd4822edb?w=200">
-                            <div class="lesson-name">Matematik - 8. Sınıf</div>
+                            <span>Beden Eğitimi ve Spor</span>
                         </div>
-                        <div class="lesson-box">
+                        <div class="lesson-item">
+                            <img src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?w=200">
+                            <span>Din Kültürü ve Ahlak Bilgisi</span>
+                        </div>
+                        <div class="lesson-item">
                             <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=200">
-                            <div class="lesson-name">Fen Bilimleri</div>
-                        </div>
-                        <div class="lesson-box">
-                            <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=200">
-                            <div class="lesson-name">İngilizce</div>
+                            <span>Fen Bilimleri</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="card">
-                    <div class="card-title">Matematik İzi'nde Ne Yaptın?</div>
-                    <div class="stats-circle">
-                        <b id="studyTime">45</b>
-                        <span>Dakika</span>
+                    <div class="card-header">Eba'da Ne Yaptın?</div>
+                    <div class="stats-box">
+                        <div class="chart-circle">
+                            <b>0</b>
+                            <span>dk.</span>
+                        </div>
+                        <p style="font-size: 12px; color: #999;">Son 7 günde kullanımın bulunmamaktadır.</p>
                     </div>
-                    <p style="text-align:center; font-size: 12px; color: #999;">Son 7 günde toplam çalışma süren.</p>
+                </div>
+
+                <div class="card">
+                    <div class="post-input">
+                        <img id="uPicSmall" src="" style="width:35px; height:35px; border-radius:50%; background:#eee;">
+                        <input type="text" placeholder="Ne paylaşmak istersin?">
+                    </div>
                 </div>
             </div>
 
-            <div class="right-col">
+            <div class="right-content">
                 <div class="card calendar-card">
-                    <div class="card-title">Mart 2026</div>
-                    <div style="display:grid; grid-template-columns: repeat(7, 1fr); gap: 5px;">
-                        <span style="font-weight: bold;">P</span><span>S</span><span>Ç</span><span>P</span><span>C</span><span>C</span><span>P</span>
-                        <span>1</span><span>2</span><span>3</span><span>4</span><span style="background:var(--eba-blue); color:white; border-radius:50%">5</span><span>6</span><span>7</span>
+                    <div class="cal-header">
+                        <span>‹</span> Mart 2026 <span>›</span>
+                    </div>
+                    <div class="days-grid">
+                        <b>PZT</b><b>SAL</b><b>ÇAR</b><b>PER</b><b>CUM</b><b>CMT</b><b>PAZ</b>
+                        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span>
+                        <span>8</span><span class="day today">9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span>
                     </div>
                 </div>
 
                 <div class="card">
-                    <div class="card-title">Yaklaşanlar</div>
-                    <ul class="event-list">
-                        <li class="event-item">
-                            <b>8. Sınıf Deneme Sınavı</b>
-                            <span>Bitiş: 12 Mart Perşembe</span>
-                        </li>
-                        <li class="event-item">
-                            <b>Üslü Sayılar Ödevi</b>
-                            <span>Bitiş: 15 Mart Pazar</span>
-                        </li>
-                    </ul>
+                    <div class="card-header">Yaklaşanlar</div>
+                    <div style="padding: 15px; font-size: 12px;">
+                        <div style="margin-bottom: 10px;">
+                            <b style="color:var(--eba-mavi)">Matematik Ödevi</b><br>
+                            <span>Bitiş: 20 Mart Cuma</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -144,13 +194,16 @@
 
     <script>
         window.onload = function() {
-            // LocalStorage'dan kullanıcı verilerini al
-            const name = localStorage.getItem('m_izi_name') || "Misafir Öğrenci";
+            const name = localStorage.getItem('m_izi_name') || "Beril Çelik";
             const img = localStorage.getItem('m_izi_img') || "https://api.dicebear.com/7.x/bottts/svg?seed=Math";
-            
+            const points = localStorage.getItem('m_izi_xp') || "37";
+
             document.getElementById('uName').innerText = name;
-            document.getElementById('wName').innerText = name;
+            document.getElementById('topName').innerText = name;
+            document.getElementById('pointVal').innerText = points;
             document.getElementById('uPic').src = img;
+            document.getElementById('uPicTop').src = img;
+            document.getElementById('uPicSmall').src = img;
         };
     </script>
 </body>
