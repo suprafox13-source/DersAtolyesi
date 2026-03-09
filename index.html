@@ -2,85 +2,39 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Matematik İzi | Güvenli Giriş</title>
+    <title>Matematik İzi | 5-A Giriş</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: #0f0c29; height: 100vh; display: flex; align-items: center; justify-content: center; color: white; }
-        .login-card { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); padding: 40px; border-radius: 25px; width: 360px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
-        .avatar-box { width: 110px; height: 110px; border-radius: 50%; border: 3px solid #ff9f43; margin: 0 auto 20px; overflow: hidden; position: relative; }
-        #preview { width: 100%; height: 100%; object-fit: cover; }
-        input[type="text"] { width: 100%; padding: 14px; border-radius: 10px; border: none; margin-bottom: 20px; outline: none; text-align: center; font-size: 16px; background: #eee; }
-        .btn { width: 100%; padding: 16px; background: #ff9f43; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.3s; }
-        .btn:hover { background: #e67e22; }
-        .warning { color: #ff4757; font-size: 12px; margin-top: 10px; display: none; font-weight: bold; }
+        body { background: #0088cc; height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .login-card { background: white; padding: 40px; border-radius: 15px; width: 350px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; text-align: center; }
+        .btn { width: 100%; padding: 15px; background: #ff9f43; border: none; border-radius: 5px; color: white; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
-
     <div class="login-card">
-        <h1 style="margin-bottom: 10px;">MATEMATİK <span style="color:#ff9f43">İZİ</span></h1>
-        <p style="font-size: 12px; color: #aaa; margin-bottom: 20px;">Lütfen sadece gerçek isminizi giriniz.</p>
-        
-        <div class="avatar-box">
-            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Math" id="preview">
-            <input type="file" id="imgInp" accept="image/*" style="display:none">
-            <label for="imgInp" style="position:absolute; bottom:0; width:100%; background:rgba(0,0,0,0.7); font-size:10px; cursor:pointer; padding:3px;">GÜNCELLE</label>
-        </div>
-
-        <input type="text" id="uName" placeholder="Adınız Soyadınız" autocomplete="off">
-        <button class="btn" onclick="guvenliGiris()">Atölyeye Gir</button>
-        <p id="errorBox" class="warning">Uygunsuz içerik tespit edildi!</p>
+        <h2 style="color:#0088cc; margin-bottom:20px;">5-A Matematik İzi</h2>
+        <input type="text" id="uName" placeholder="Adınız Soyadınız">
+        <button class="btn" onclick="giris()">Sisteme Gir</button>
+        <p style="font-size: 11px; margin-top: 15px; color: #888;">Giriş yaptığınızda bilgileriniz bu cihazda saklanır.</p>
     </div>
 
     <script>
-        // SİSTEMİN "KÜFÜR" OLARAK ALGILAYACAĞI ANAHTAR KELİMELER
-        // Burayı istediğin kadar genişletebilirsin.
-        const karaListe = ["kufur1", "argo1", "kotukelime", "pislik", "aptal", "manyak"]; 
+        // TEK SEFERLİK GİRİŞ KONTROLÜ
+        if(localStorage.getItem('m_izi_name')) {
+            window.location.href = 'dashboard.html';
+        }
 
-        let photoData = "";
-        
-        document.getElementById('imgInp').onchange = function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (f) => {
-                    document.getElementById('preview').src = f.target.result;
-                    photoData = f.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        };
-
-        function guvenliGiris() {
-            const isim = document.getElementById('uName').value.trim().toLowerCase();
-            const errorBox = document.getElementById('errorBox');
+        function giris() {
+            const name = document.getElementById('uName').value.trim();
+            if(name.length < 3) return alert("Lütfen isminizi tam girin.");
             
-            // 1. ADIM: Boşluk kontrolü
-            if (isim.length < 3) {
-                alert("Lütfen en az 3 harfli bir isim girin.");
-                return;
-            }
+            // Küfür/Argo Filtresi
+            const yasakli = ["kufur1", "argo1"]; // Burayı doldurabilirsin
+            if(yasakli.some(k => name.toLowerCase().includes(k))) return alert("Uygunsuz isim!");
 
-            // 2. ADIM: Semantik Kontrol (Kara Liste Taraması)
-            // Kelimenin içinde yasaklı bir parça var mı diye bakar.
-            const yasakliMi = karaListe.some(kelime => isim.includes(kelime));
-
-            // 3. ADIM: Sayı ve Sembol Kontrolü
-            const sadeceHarf = /^[a-zçğıöşü\s]+$/;
-
-            if (!sadeceHarf.test(isim)) {
-                errorBox.innerText = "İsimde sadece harf kullanabilirsiniz!";
-                errorBox.style.display = "block";
-            } else if (yasakliMi) {
-                errorBox.innerText = "Bu kelime topluluk kurallarına aykırıdır!";
-                errorBox.style.display = "block";
-            } else {
-                errorBox.style.display = "none";
-                // Kaydet ve Dashboard'a yolla
-                localStorage.setItem('m_izi_name', document.getElementById('uName').value.trim());
-                localStorage.setItem('m_izi_img', photoData || document.getElementById('preview').src);
-                window.location.href = 'dashboard.html';
-            }
+            localStorage.setItem('m_izi_name', name);
+            window.location.href = 'dashboard.html';
         }
     </script>
 </body>
