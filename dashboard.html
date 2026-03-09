@@ -2,66 +2,123 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Matematik İzi | 5/A Paneli</title>
+    <title>5-A Matematik Paneli</title>
     <style>
-        :root { --eba-mavi: #0088cc; --eba-koyu: #2c3e50; --eba-gri: #f4f7f8; }
+        :root { --eba: #0088cc; --dark: #2c3e50; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background-color: var(--eba-gri); display: flex; flex-direction: column; height: 100vh; }
+        body { background: #f4f7f8; display: flex; height: 100vh; }
+        
+        /* Sol Sidebar */
+        .sidebar { width: 240px; background: white; border-right: 1px solid #ddd; display: flex; flex-direction: column; }
+        .eba-header { background: var(--eba); color: white; padding: 15px; text-align: center; font-weight: bold; }
+        .profile { padding: 20px; text-align: center; border-bottom: 1px solid #eee; }
+        .role-tag { background: #ff4757; color: white; font-size: 10px; padding: 2px 8px; border-radius: 10px; margin-top: 5px; display: inline-block; }
+        
+        .nav-item { padding: 15px 20px; cursor: pointer; font-size: 14px; border-bottom: 1px solid #f9f9f9; }
+        .nav-item:hover { background: #f0f7ff; color: var(--eba); }
+        .active { background: var(--eba); color: white !important; }
 
-        .header { background-color: var(--eba-mavi); color: white; padding: 10px 20px; text-align: center; font-weight: bold; }
-        .container { display: flex; flex: 1; }
-        .sidebar { width: 240px; background: white; border-right: 1px solid #ddd; padding: 20px; }
-        .profile-img { width: 100px; height: 100px; border-radius: 50%; display: block; margin: 0 auto 10px; border: 3px solid var(--eba-mavi); object-fit: cover; }
-        .main { flex: 1; padding: 20px; display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+        /* Ana Alan */
+        .main { flex: 1; display: flex; flex-direction: column; }
+        .top-bar { background: var(--dark); color: white; padding: 10px 20px; display: flex; justify-content: space-between; }
+        .content { padding: 20px; overflow-y: auto; display: grid; grid-template-columns: 1fr 300px; gap: 20px; }
+
+        .card { background: white; border-radius: 5px; border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; }
+        .card-h { font-weight: bold; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px; color: var(--eba); }
+
+        /* Kitap Ödevi Listesi */
+        .homework-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #eee; font-size: 13px; }
         
-        .card { background: white; padding: 20px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 20px; }
-        .card-header { font-weight: bold; color: var(--eba-mavi); margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        
-        .btn-mat { background: var(--eba-mavi); color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; width: 100%; font-weight: bold; }
+        /* Mesaj Kısmı */
+        .chat-box { height: 200px; overflow-y: auto; background: #f9f9f9; padding: 10px; border: 1px solid #eee; margin-bottom: 10px; }
+        .msg { margin-bottom: 8px; font-size: 12px; }
+        .msg b { color: var(--eba); }
     </style>
 </head>
 <body>
 
-    <div class="header">Matematik İzi / 5-A Sınıfı Matematik Profilim</div>
+    <div class="sidebar">
+        <div class="eba-header">MATEMATİK İZİ</div>
+        <div class="profile">
+            <img id="uPic" src="https://api.dicebear.com/7.x/bottts/svg?seed=Admin" style="width:70px; border-radius:50%; border:2px solid var(--eba);">
+            <h4 id="uName">Yükleniyor...</h4>
+            <div class="role-tag">GENEL SINIF GÖREVLİSİ</div>
+            <p style="font-size: 11px; color: #999; margin-top:5px;">5-A Sınıfı</p>
+        </div>
+        <div class="nav-menu">
+            <div class="nav-item active">👤 Sayfam</div>
+            <div class="nav-item">📚 Kitap Sunumları</div>
+            <div class="nav-item">📝 Ödev Takibi</div>
+            <div class="nav-item" onclick="hocayaBildir()" style="color:#ff4757; font-weight:bold;">📤 Hocama Bildir</div>
+            <div class="nav-item" onclick="cikisYap()" style="margin-top:20px; font-size:12px; color:#aaa;">Çıkış Yap</div>
+        </div>
+    </div>
 
-    <div class="container">
-        <div class="sidebar">
-            <img id="uPic" src="" class="profile-img">
-            <h3 id="uName" style="text-align:center;">...</h3>
-            <p style="text-align:center; color:#888; font-size:12px;">5/A Sınıfı</p>
-            <div style="margin-top:30px;">
-                <div class="card-header" style="cursor:pointer" onclick="location.href='sınavpan.html'">📝 Matematik Sınavlarım</div>
-                <div class="card-header" style="cursor:pointer" onclick="location.href='vidsim.html'">🎥 Matematik Videoları</div>
-            </div>
+    <div class="main">
+        <div class="top-bar">
+            <span>5-A Matematik Atölyesi</span>
+            <span id="date"></span>
         </div>
 
-        <div class="main">
-            <div>
+        <div class="content">
+            <div class="left">
                 <div class="card">
-                    <div class="card-header">Bu Haftaki Matematik Konusu</div>
-                    <p>Doğal Sayılarla İşlemler: Bölme ve Çarpma stratejileri.</p>
-                    <button class="btn-mat" onclick="location.href='vidsim.html'" style="margin-top:15px;">Konuyu İncele</button>
+                    <div class="card-h">📖 Güncel Kitap Sunumları (Ödevler)</div>
+                    <div id="hw-list">
+                        <div class="homework-item"><span>1. Ahmet Yılmaz - Kesirler Dünyası</span> <span style="color:green">TAMAM</span></div>
+                        <div class="homework-item"><span>2. Ayşe Demir - Sayıların Gizemi</span> <span style="color:orange">BEKLİYOR</span></div>
+                    </div>
                 </div>
+
                 <div class="card">
-                    <div class="card-header">Günlük Matematik Hedefi</div>
-                    <p>Bugün 20 soru çözerek 100 XP kazan!</p>
-                    <button class="btn-mat" style="background:#27ae60; margin-top:15px;" onclick="location.href='sınavpan.html'">Hemen Başla</button>
+                    <div class="card-h">💬 Sınıf Mesaj Alanı</div>
+                    <div class="chat-box" id="chat">
+                        <div class="msg"><b>Sistem:</b> Merhaba Görevli, 5-A sınıfı mesajları burada görünecek.</div>
+                    </div>
+                    <input type="text" id="msgInp" placeholder="Sınıfa mesaj yaz..." style="width:80%; padding:8px; border:1px solid #ddd; border-radius:5px;">
+                    <button onclick="mesajGonder()" style="padding:8px 15px; background:var(--eba); color:white; border:none; border-radius:5px; cursor:pointer;">Gönder</button>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-header">Yaklaşan Matematik Sınavı</div>
-                <p><b>Konu:</b> Kesirler</p>
-                <p style="font-size:12px; color:#666; margin-top:10px;">Bitiş: 20 Mart</p>
+            <div class="right">
+                <div class="card">
+                    <div class="card-h">📋 Görevli Notları</div>
+                    <textarea id="notes" style="width:100%; height:100px; border:none; outline:none; font-size:13px;" placeholder="Hocana ileteceğin notları buraya yaz..."></textarea>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        window.onload = function() {
-            document.getElementById('uName').innerText = localStorage.getItem('m_izi_name') || "Öğrenci";
-            document.getElementById('uPic').src = localStorage.getItem('m_izi_img') || "https://api.dicebear.com/7.x/bottts/svg?seed=Math";
-        };
+        // Verileri Yükle
+        const ad = localStorage.getItem('m_izi_name');
+        document.getElementById('uName').innerText = ad;
+        document.getElementById('date').innerText = new Date().toLocaleDateString();
+
+        // Mesaj Gönderme
+        function mesajGonder() {
+            const inp = document.getElementById('msgInp');
+            if(inp.value.trim() == "") return;
+            const chat = document.getElementById('chat');
+            chat.innerHTML += `<div class="msg"><b>Sen:</b> ${inp.value}</div>`;
+            inp.value = "";
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        // Hocaya Bildirme (Simülasyon)
+        function hocayaBildir() {
+            const notlar = document.getElementById('notes').value;
+            alert("Rapor Hazırlandı!\n\nGörevli: " + ad + "\nSınıf: 5-A\n\nNotlar: " + (notlar || "Ödevler kontrol edildi."));
+            console.log("Hocaya gönderilen rapor:", notlar);
+        }
+
+        // Çıkış Yapma
+        function cikisYap() {
+            if(confirm("Çıkış yapmak istediğine emin misin? (Giriş bilgileriniz silinecek)")) {
+                localStorage.clear();
+                window.location.href = 'index.html';
+            }
+        }
     </script>
 </body>
 </html>
