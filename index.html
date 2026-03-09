@@ -2,169 +2,43 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matematik İzi | Giriş</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        
-        body { 
-            background: #0f0c29; 
-            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); 
-            height: 100vh; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            color: white; 
-            overflow: hidden;
-        }
-
-        .login-card { 
-            background: rgba(255, 255, 255, 0.05); 
-            backdrop-filter: blur(15px); 
-            padding: 40px; 
-            border-radius: 30px; 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            width: 100%;
-            max-width: 400px; 
-            text-align: center; 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-        }
-
-        h1 { font-size: 32px; letter-spacing: 3px; margin-bottom: 10px; font-weight: 800; }
-        h1 span { color: #ff9f43; text-shadow: 0 0 15px rgba(255, 159, 67, 0.5); }
-        
-        p { color: #aaa; font-size: 14px; margin-bottom: 30px; }
-
-        /* Profil Resmi Yükleme */
-        .avatar-container {
-            position: relative;
-            width: 130px;
-            height: 130px;
-            margin: 0 auto 25px;
-        }
-
-        .avatar-circle {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            border: 4px solid #ff9f43;
-            object-fit: cover;
-            background: #1a1a1a;
-            display: block;
-            box-shadow: 0 0 20px rgba(255, 159, 67, 0.2);
-        }
-
-        .upload-badge {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            background: #ff9f43;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border: 3px solid #24243e;
-            transition: 0.3s;
-        }
-
-        .upload-badge:hover { transform: scale(1.1); background: #ee5253; }
-
-        input[type="text"] { 
-            width: 100%; 
-            padding: 15px; 
-            border-radius: 12px; 
-            border: 1px solid rgba(255,255,255,0.2); 
-            background: rgba(0,0,0,0.2);
-            color: white;
-            margin-bottom: 20px; 
-            outline: none; 
-            font-size: 16px; 
-            transition: 0.3s;
-        }
-
-        input[type="text"]:focus { border-color: #ff9f43; background: rgba(0,0,0,0.4); }
-
-        .btn-start { 
-            width: 100%; 
-            padding: 16px; 
-            background: #ff9f43; 
-            border: none; 
-            border-radius: 12px; 
-            color: white; 
-            font-weight: bold; 
-            font-size: 18px; 
-            cursor: pointer; 
-            transition: 0.3s;
-            box-shadow: 0 10px 20px rgba(255, 159, 67, 0.3);
-        }
-
-        .btn-start:hover { 
-            background: #ee5253; 
-            transform: translateY(-3px); 
-            box-shadow: 0 15px 25px rgba(238, 82, 83, 0.4);
-        }
-
-        #fileInp { display: none; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #0f0c29; background: linear-gradient(135deg, #0f0c29, #302b63); height: 100vh; display: flex; align-items: center; justify-content: center; color: white; }
+        .login-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); padding: 40px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); width: 380px; text-align: center; }
+        h1 span { color: #ff9f43; }
+        .avatar-box { width: 110px; height: 110px; border-radius: 50%; border: 3px solid #ff9f43; margin: 0 auto 20px; overflow: hidden; position: relative; background: #222; }
+        #preview { width: 100%; height: 100%; object-fit: cover; }
+        input[type="text"] { width: 100%; padding: 12px; border-radius: 10px; border: none; margin: 20px 0; outline: none; }
+        .btn { width: 100%; padding: 15px; background: #ff9f43; border: none; border-radius: 10px; color: white; font-weight: bold; cursor: pointer; font-size: 16px; }
     </style>
 </head>
 <body>
-
     <div class="login-card">
         <h1>MATEMATİK <span>İZİ</span></h1>
-        <p>Geleceğin Matematikçisi, İzini Bırak!</p>
-
-        <div class="avatar-container">
-            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Math" id="preview" class="avatar-circle">
-            <label for="fileInp" class="upload-badge">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M3 4V1h2v3h3v2H5v3H3V6H0V4h3zm3 6V7h3V4h7l1.83 2H21c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2V10h3zm7 9c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-3.2-5c0 1.77 1.43 3.2 3.2 3.2s3.2-1.43 3.2-3.2-1.43-3.2-3.2-3.2-3.2 1.43-3.2 3.2z"/></svg>
-            </label>
-            <input type="file" id="fileInp" accept="image/*">
+        <div class="avatar-box">
+            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Math" id="preview">
+            <label for="imgInp" style="position:absolute; bottom:0; width:100%; background:rgba(255,159,67,0.8); font-size:10px; cursor:pointer;">SEÇ</label>
+            <input type="file" id="imgInp" accept="image/*" style="display:none">
         </div>
-
-        <form id="loginForm">
-            <input type="text" id="userName" placeholder="Adın ve Soyadın" required>
-            <button type="submit" class="btn-start">Atölyeye Giriş Yap</button>
-        </form>
+        <input type="text" id="uName" placeholder="Adınız Soyadınız" required>
+        <button class="btn" onclick="save()">Başla →</button>
     </div>
-
     <script>
-        let base64Image = "";
-
-        // Fotoğraf Seçme İşlemi
-        document.getElementById('fileInp').onchange = function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    document.getElementById('preview').src = event.target.result;
-                    base64Image = event.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
+        let photo = "";
+        document.getElementById('imgInp').onchange = function(e) {
+            let r = new FileReader();
+            r.onload = () => { document.getElementById('preview').src = r.result; photo = r.result; };
+            r.readAsDataURL(e.target.files[0]);
         };
-
-        // Form Gönderme
-        document.getElementById('loginForm').onsubmit = function(e) {
-            e.preventDefault();
-            const name = document.getElementById('userName').value.trim();
-            
-            if(name) {
-                // Bilgileri Dashboard için Kaydet
-                localStorage.setItem('m_izi_name', name);
-                if(base64Image) {
-                    localStorage.setItem('m_izi_img', base64Image);
-                } else {
-                    // Resim seçilmediyse mevcut önizlemeyi (bot ikonunu) kaydet
-                    localStorage.setItem('m_izi_img', document.getElementById('preview').src);
-                }
-                
-                // Dashboard'a yönlendir
-                window.location.href = 'dashboard.html';
-            }
-        };
+        function save() {
+            const name = document.getElementById('uName').value;
+            if(!name) return alert("İsim yazmalısın!");
+            localStorage.setItem('m_izi_name', name);
+            localStorage.setItem('m_izi_img', photo || document.getElementById('preview').src);
+            window.location.href = 'dashboard.html';
+        }
     </script>
 </body>
 </html>
