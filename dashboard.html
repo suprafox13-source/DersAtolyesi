@@ -22,7 +22,10 @@
         /* Ana İçerik */
         .main { flex: 1; display: flex; flex-direction: column; }
         .top-bar { background: var(--koyu); color: white; padding: 12px 30px; display: flex; justify-content: space-between; align-items: center; }
-        .container { padding: 25px; overflow-y: auto; display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px; }
+        
+        /* İçerik Taşıyıcılar */
+        .container { padding: 25px; overflow-y: auto; display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px; flex: 1; }
+        .sunum-container { padding: 25px; overflow-y: auto; display: none; flex-direction: column; gap: 20px; flex: 1; }
 
         /* Kartlar */
         .card { background: white; border-radius: 8px; border: 1px solid #ddd; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
@@ -41,6 +44,17 @@
         /* Mesajlaşma */
         .chat { height: 150px; overflow-y: auto; background: #fafafa; border: 1px solid #eee; padding: 10px; margin-bottom: 10px; font-size: 13px; }
         input[type="text"] { width: 75%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; outline: none; }
+
+        /* Yeni Klasör Tasarımı */
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .folder-card { background: #f8f9fa; border: 1px solid #e2e8f0; border-radius: 6px; padding: 15px; }
+        .folder-title { font-size: 13px; font-weight: bold; margin-bottom: 10px; display: block; }
+        .pdf-btn { display: block; width: 100%; text-align: left; padding: 10px; background: white; border: 1px solid #cbd5e1; border-radius: 4px; margin-bottom: 6px; cursor: pointer; font-size: 12px; transition: 0.2s; }
+        .pdf-btn:hover { background: #f1f5f9; border-color: var(--eba); }
+        
+        /* Akıllı Tahta Görüntüleyici */
+        .viewer-box { background: #2c3e50; padding: 10px; border-radius: 8px; border: 4px solid #34495e; text-align: center; }
+        iframe { width: 100%; height: 500px; border: none; background: white; border-radius: 4px; display: none; }
     </style>
 </head>
 <body>
@@ -54,10 +68,10 @@
             <p style="font-size: 12px; color: var(--eba); margin-top: 5px; font-weight: bold;">5-A SINIFI</p>
         </div>
         <div class="nav-menu">
-            <div class="nav-item active">🏠 Ana Panel</div>
-            <div class="nav-item">📚 Kitap Sunumları</div>
-            <div class="nav-item">📝 Ödev Takip</div>
-            <div class="nav-item">✍️ Test & Sınavlar</div>
+            <div id="menuAna" class="nav-item active" onclick="sayfaDegistir('ana')">🏠 Ana Panel</div>
+            <div id="menuKitap" class="nav-item" onclick="sayfaDegistir('kitap')">📖 Kitap & Testler</div>
+            <div class="nav-item" onclick="alert('Ödev takip modülü yakında aktif!')">📝 Ödev Takip</div>
+            <div class="nav-item" onclick="alert('Sınav merkezi ana panelde aktif!')">✍️ Test & Sınavlar</div>
             <div class="nav-item" style="color:#ff4757; font-weight:bold" onclick="hocayaRaporla()">📤 Hocama Bildir</div>
         </div>
     </div>
@@ -68,7 +82,7 @@
             <div style="font-size: 13px;">Puanım: <b id="totalXP" style="color:var(--turuncu)">37</b></div>
         </div>
 
-        <div class="container">
+        <div class="container" id="panelAna">
             <div class="left">
                 <div class="card">
                     <div class="card-h">📖 Kitap Sunumu & Ödev Durumu <span>(Haftalık)</span></div>
@@ -110,15 +124,74 @@
                 </div>
             </div>
         </div>
+
+        <div class="sunum-container" id="panelKitap">
+            <div class="card">
+                <div class="card-h">📁 5-A Matematik Ders Klasörü <span>(GitHub Sunumlar)</span></div>
+                
+                <div class="btn-grid">
+                    <div class="folder-card">
+                        <span class="folder-title" style="color: #2ecc71;">📖 Matematik Sunumları</span>
+                        <button class="pdf-btn" onclick="dosyaAc('mat1.pdf')">📄 Matematik 1. Fasikül</button>
+                        <button class="pdf-btn" onclick="dosyaAc('mat2.pdf')">📄 Matematik 2. Fasikül</button>
+                    </div>
+
+                    <div class="folder-card">
+                        <span class="folder-title" style="color: #e74c3c;">📝 Çalışma Testleri</span>
+                        <button class="pdf-btn" onclick="dosyaAc('test1.pdf')">✍️ Konu Testi 1</button>
+                        <button class="pdf-btn" onclick="dosyaAc('test2.pdf')">✍️ Konu Testi 2</button>
+                    </div>
+                </div>
+
+                <div class="viewer-box">
+                    <div id="ekranDurum" style="color: #bdc3c7; font-size: 13px; margin-bottom: 10px; font-weight: bold;">📺 Akıllı Tahta: Dosya Seçilmesi Bekleniyor...</div>
+                    <iframe id="pdfViewer" src=""></iframe>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        // Sayfa Yüklendiğinde
+        // Sayfa Yüklendiğinde Kullanıcı Adı Ayarlama
         window.onload = function() {
             const isim = localStorage.getItem('m_izi_name') || "Görevli";
             document.getElementById('uName').innerText = isim;
             document.getElementById('totalXP').innerText = localStorage.getItem('m_izi_xp') || "37";
         };
+
+        // Sekmeler Arası Geçiş
+        function sayfaDegistir(hedef) {
+            const panelAna = document.getElementById('panelAna');
+            const panelKitap = document.getElementById('panelKitap');
+            const menuAna = document.getElementById('menuAna');
+            const menuKitap = document.getElementById('menuKitap');
+
+            if (hedef === 'ana') {
+                panelAna.style.display = 'grid';
+                panelKitap.style.display = 'none';
+                menuAna.classList.add('active');
+                menuKitap.classList.remove('active');
+            } else {
+                panelAna.style.display = 'none';
+                panelKitap.style.display = 'flex';
+                menuAna.classList.remove('active');
+                menuKitap.classList.add('active');
+            }
+        }
+
+        // Sunumlar Klasöründeki PDF'leri Göster
+        function dosyaAc(dosyaAdi) {
+            const iframe = document.getElementById('pdfViewer');
+            const durum = document.getElementById('ekranDurum');
+            
+            // GitHub üzerindeki "Sunumlar" klasöründeki dosyayı hedef alır
+            const dosyaYolu = "Sunumlar/" + dosyaAdi;
+            
+            iframe.src = dosyaYolu;
+            iframe.style.display = "block";
+            durum.innerText = "📺 Şu an açık: " + dosyaAdi + " (MÜO 5-A)";
+        }
 
         // Mesaj Gönder
         function sendMsg() {
