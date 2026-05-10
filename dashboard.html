@@ -3,136 +3,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mustafa Üstündağ Ortaokulu - 5-A Matematik İzi</title>
+    <title>EBA - Matematik İzi Portalı</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        body {
+            background-color: #f4f5f7;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        /* Sol EBA Menüsü */
+        .sidebar {
+            width: 240px;
+            background-color: #ffffff;
+            border-right: 1px solid #e0e0e0;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            padding: 20px 0;
         }
-        .container {
-            width: 100%;
-            max-width: 600px;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .logo-area {
             text-align: center;
-        }
-        h2 {
-            color: #333;
-            margin-bottom: 5px;
-            font-size: 20px;
-        }
-        h3 {
-            color: #666;
-            margin-top: 0;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f0f0f0;
             margin-bottom: 20px;
-            font-size: 14px;
-            font-weight: normal;
         }
-        .section {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-        .section-title {
+        .logo-area h1 {
+            color: #f37021; /* EBA Turuncusu */
+            font-size: 22px;
             font-weight: bold;
-            color: #444;
-            margin-bottom: 10px;
-            display: block;
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 5px;
         }
-        .btn-group {
+        .logo-area p {
+            font-size: 11px;
+            color: #777;
+        }
+        .menu-item {
+            padding: 12px 25px;
+            color: #555;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            border-left: 4px solid transparent;
+            transition: all 0.2s;
+        }
+        .menu-item:hover, .menu-item.active {
+            background-color: #fff5f0;
+            color: #f37021;
+            border-left-color: #f37021;
+            font-weight: bold;
+        }
+        /* Sağ İçerik Alanı */
+        .main-content {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            background-color: #f4f5f7;
+            overflow-y: auto;
         }
-        .btn {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 15px;
+        /* Üst Profil Barı */
+        .top-bar {
+            height: 60px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+        .school-name {
+            font-weight: bold;
+            color: #2c3e50;
             font-size: 14px;
-            border-radius: 5px;
-            cursor: pointer;
+        }
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+        .avatar {
+            width: 35px;
+            height: 35px;
+            background-color: #f37021;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        /* Ders İçerik Kartı */
+        .content-area {
+            padding: 30px;
+            flex: 1;
+        }
+        .eba-card {
+            background: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .eba-card-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #f37021;
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+        .grid-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .eba-btn {
+            background-color: #ffffff;
+            border: 1px solid #dcdcdc;
+            padding: 15px;
+            border-radius: 6px;
             text-align: left;
-            transition: background 0.2s;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
-        .btn:hover {
-            background-color: #0056b3;
+        .eba-btn:hover {
+            border-color: #f37021;
+            box-shadow: 0 2px 10px rgba(243,112,33,0.1);
         }
-        .btn-test {
-            background-color: #28a745;
+        .eba-btn span {
+            font-weight: bold;
+            font-size: 14px;
+            color: #2c3e50;
         }
-        .btn-test:hover {
-            background-color: #218838;
+        .eba-btn small {
+            font-size: 11px;
+            color: #888;
         }
-        .viewer {
-            margin-top: 20px;
-            border-top: 2px solid #ddd;
-            padding-top: 20px;
+        /* EBA TV / Tahta Ekranı */
+        .tahta-container {
+            background: #2c3e50;
+            border-radius: 8px;
+            padding: 10px;
+            border: 4px solid #34495e;
+            display: none;
+        }
+        .tahta-header {
+            color: white;
+            font-size: 12px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
         }
         iframe {
             width: 100%;
-            height: 500px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            display: none;
-        }
-        .status {
-            font-size: 14px;
-            color: #555;
-            margin-bottom: 10px;
+            height: 550px;
+            border: none;
+            background: white;
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>🏫 MUSTAFA ÜSTÜNDAĞ ORTAOKULU</h2>
-    <h3>5-A Matematik İzi Kontrol Paneli</h3>
+    <div class="sidebar">
+        <div class="logo-area">
+            <h1>eba</h1>
+            <p>Matematik İzi Portalı</p>
+        </div>
+        <div class="menu-item active">🏠 Sayfam</div>
+        <div class="menu-item">📚 Dersler</div>
+        <div class="menu-item">✍️ Sınavlar</div>
+        <div class="menu-item">📁 Kütüphane</div>
+        <div class="menu-item">📊 Raporlar</div>
+    </div>
 
-    <div class="section">
-        <span class="section-title">📖 Sunumlar</span>
-        <div class="btn-group">
-            <button class="btn" onclick="dosyaAc('mat1.pdf')">📄 Matematik 1. Fasikül</button>
-            <button class="btn" onclick="dosyaAc('mat2.pdf')">📄 Matematik 2. Fasikül</button>
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="school-name">🏫 MUSTAFA ÜSTÜNDAĞ ORTAOKULU - 5-A SINIFI</div>
+            <div class="user-profile">
+                <span>Hoş geldin, <b>Semih</b></span>
+                <div class="avatar">S</div>
+            </div>
+        </div>
+
+        <div class="content-area">
+            
+            <div class="eba-card">
+                <div class="eba-card-title">📖 Matematik Sunumları (Fasiküller)</div>
+                <div class="grid-buttons">
+                    <button class="eba-btn" onclick="dersAc('mat1.pdf', 'Matematik 1. Fasikül')">
+                        <span>📐 1. Fasikül</span>
+                        <small>Geometrik Şekiller</small>
+                    </button>
+                    <button class="eba-btn" onclick="dersAc('mat2.pdf', 'Matematik 2. Fasikül')">
+                        <span>🔢 2. Fasikül</span>
+                        <small>Sayılar ve İşlemler</small>
+                    </button>
+                </div>
+            </div>
+
+            <div class="eba-card">
+                <div class="eba-card-title">📝 Çalışma ve Konu Testleri</div>
+                <div class="grid-buttons">
+                    <button class="eba-btn" onclick="dersAc('test1.pdf', 'Konu Testi 1')" style="border-left: 4px solid #e74c3c;">
+                        <span>✍️ Çalışma Testi 1</span>
+                        <small>Konu Tarama</small>
+                    </button>
+                    <button class="eba-btn" onclick="dersAc('test2.pdf', 'Konu Testi 2')" style="border-left: 4px solid #e74c3c;">
+                        <span>✍️ Çalışma Testi 2</span>
+                        <small>Ünite Değerlendirme</small>
+                    </button>
+                </div>
+            </div>
+
+            <div class="tahta-container" id="tahtaKutusu">
+                <div class="tahta-header">
+                    <span id="aktifDers">📺 Canlı Ders Ekranı</span>
+                    <span style="color: #f37021; font-weight: bold;">EBA TV - 5-A</span>
+                </div>
+                <iframe id="ebaIframe" src=""></iframe>
+            </div>
+
         </div>
     </div>
 
-    <div class="section">
-        <span class="section-title">📝 Çalışma Testleri</span>
-        <div class="btn-group">
-            <button class="btn btn-test" onclick="dosyaAc('test1.pdf')">✍️ Konu Testi 1</button>
-            <button class="btn btn-test" onclick="dosyaAc('test2.pdf')">✍️ Konu Testi 2</button>
-        </div>
-    </div>
+    <script>
+        // EBA Tarzında dosyaları alt panelde açan kod
+        function dersAc(dosyaAdi, dersBasligi) {
+            const tahta = document.getElementById('tahtaKutusu');
+            const iframe = document.getElementById('ebaIframe');
+            const baslik = document.getElementById('aktifDers');
 
-    <div class="viewer">
-        <div id="status" class="status">📺 Ekran: Dosya bekleniyor...</div>
-        <iframe id="pdfViewer" src=""></iframe>
-    </div>
-</div>
+            // GitHub'daki Sunumlar klasöründen çekiyor
+            const dosyaYolu = "Sunumlar/" + dosyaAdi;
 
-<script>
-    // Klasörün içindeki PDF'leri açan orijinal fonksiyon
-    function dosyaAc(dosyaAdi) {
-        const iframe = document.getElementById('pdfViewer');
-        const status = document.getElementById('status');
-        
-        // GitHub'daki Sunumlar klasörünü hedef gösteriyoruz
-        const dosyaYolu = "Sunumlar/" + dosyaAdi;
-        
-        iframe.src = dosyaYolu;
-        iframe.style.display = "block";
-        status.innerText = "📺 Şu an açık: " + dosyaAdi;
-    }
-</script>
+            iframe.src = dosyaYolu;
+            tahta.style.display = "block";
+            baslik.innerText = "📺 Şu an açık: " + dersBasligi;
+
+            // Ekran açıldığında otomatik olarak o alana kaydırır
+            tahta.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
 
 </body>
 </html>
+ 
