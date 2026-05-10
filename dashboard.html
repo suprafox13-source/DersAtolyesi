@@ -1,105 +1,44 @@
-<div class="card" style="border: 2px solid #2ecc71; background: #fafdfb; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-radius: 12px; padding: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+<div class="card" style="border: 1px solid #ddd; background: #fff; margin-bottom: 20px; border-radius: 8px; padding: 15px; font-family: sans-serif;">
     
-    <div style="text-align: center; border-bottom: 2px solid #2ecc71; padding-bottom: 10px; margin-bottom: 15px;">
-        <h2 style="margin: 0; color: #2c3e50; font-size: 18px; font-weight: bold; letter-spacing: 0.5px;">
-            🏫 MUSTAFA ÜSTÜNDAĞ ORTAOKULU
-        </h2>
-        <span style="font-size: 11px; color: #27ae60; font-weight: 600; text-transform: uppercase;">
-            5-A Sınıfı Matematik İzi Paneli
-        </span>
+    <div style="text-align: center; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 15px;">
+        <h3 style="margin: 0; color: #333; font-size: 16px;">🏫 MUSTAFA ÜSTÜNDAĞ ORTAOKULU</h3>
+        <span style="font-size: 11px; color: #666;">5-A Matematik İzi Paneli</span>
     </div>
 
-    <p style="font-size: 12px; color: #555; margin-bottom: 15px; text-align: center;">
-        İndirdiğin Matematik 1, Matematik 2 fasiküllerini (Sunumlar) ve çalışma testlerini buradan yansıt:
-    </p>
+    <div style="margin-bottom: 15px;">
+        <label style="font-size: 12px; font-weight: bold; color: #555; display: block; margin-bottom: 5px;">📂 5-A Ders Klasörü:</label>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <div style="background: #f9f9f9; padding: 10px; border-radius: 6px; border: 1px solid #e0e0e0;">
+                <span style="font-size: 11px; font-weight: bold; color: #2ecc71; display: block; margin-bottom: 5px;">📖 Sunumlar (Fasiküller)</span>
+                <button onclick="dosyaAc('mat1.pdf')" style="width: 100%; padding: 6px; font-size: 11px; margin-bottom: 4px; border: 1px solid #ccc; background: white; cursor: pointer; border-radius: 4px; text-align: left;">📄 Matematik 1. Fasikül</button>
+                <button onclick="dosyaAc('mat2.pdf')" style="width: 100%; padding: 6px; font-size: 11px; border: 1px solid #ccc; background: white; cursor: pointer; border-radius: 4px; text-align: left;">📄 Matematik 2. Fasikül</button>
+            </div>
 
-    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-        <button onclick="sekmeDegistir('sunum')" id="btnSunum" style="flex: 1; padding: 12px; background: #2ecc71; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s;">
-            📖 Matematik Sunumları (1 ve 2)
-        </button>
-        <button onclick="sekmeDegistir('test')" id="btnTest" style="flex: 1; padding: 12px; background: #ddd; color: #333; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s;">
-            📝 Çalışma Testleri
-        </button>
-    </div>
-
-    <div id="sunumAlani" style="display: block; background: #f9f9f9; padding: 10px; border-radius: 6px; border: 1px dashed #ccc;">
-        <p style="font-size: 11px; color: #666; margin: 0 0 8px 0; font-weight: bold;">📥 Matematik 1 veya 2 Kitap Dosyasını Seç (PDF/Resim):</p>
-        <input type="file" id="sunumInput" accept="application/pdf, image/*" style="font-size: 11px; width: 100%;">
-    </div>
-
-    <div id="testAlani" style="display: none; background: #f9f9f9; padding: 10px; border-radius: 6px; border: 1px dashed #ccc;">
-        <p style="font-size: 11px; color: #666; margin: 0 0 8px 0; font-weight: bold;">📥 İndirdiğin Matematik Çalışma Testini Seç (PDF/Resim):</p>
-        <input type="file" id="testInput" accept="application/pdf, image/*" style="font-size: 11px; width: 100%;">
-    </div>
-
-    <div style="margin-top: 20px; background: #2c3e50; border-radius: 10px; padding: 15px; text-align: center; border: 4px solid #34495e;">
-        <div id="tahtaDurum" style="color: #ecf0f1; font-size: 13px; font-weight: bold; margin-bottom: 5px;">
-            📺 AKILLI TAHTA EKRANI
+            <div style="background: #f9f9f9; padding: 10px; border-radius: 6px; border: 1px solid #e0e0e0;">
+                <span style="font-size: 11px; font-weight: bold; color: #e74c3c; display: block; margin-bottom: 5px;">📝 Çalışma Testleri</span>
+                <button onclick="dosyaAc('test1.pdf')" style="width: 100%; padding: 6px; font-size: 11px; margin-bottom: 4px; border: 1px solid #ccc; background: white; cursor: pointer; border-radius: 4px; text-align: left;">✍️ Konu Testi 1</button>
+                <button onclick="dosyaAc('test2.pdf')" style="width: 100%; padding: 6px; font-size: 11px; border: 1px solid #ccc; background: white; cursor: pointer; border-radius: 4px; text-align: left;">✍️ Konu Testi 2</button>
+            </div>
         </div>
-        <span id="dosyaBekleniyor" style="color: #bdc3c7; font-size: 11px; display: block; padding: 20px 0;">
-            Mustafa Üstündağ Ortaokulu 5-A dersi için dosya bekleniyor...
-        </span>
-        <iframe id="tahtaIframe" src="" width="100%" height="480px" style="border: none; display: none; border-radius: 6px; background: white;"></iframe>
-        <img id="tahtaGorsel" src="" style="max-width: 100%; max-height: 480px; display: none; border-radius: 6px;">
+    </div>
+
+    <div style="background: #f5f5f5; border: 1px solid #ccc; border-radius: 6px; padding: 8px; text-align: center;">
+        <span id="ekranDurum" style="color: #666; font-size: 11px; display: block; margin-bottom: 5px;">📺 Ekran: Dosya bekleniyor...</span>
+        
+        <iframe id="dersEkran" src="" width="100%" height="450px" style="border: none; display: none; background: white; border-radius: 4px;"></iframe>
     </div>
 </div>
 
 <script>
-    // Sekmeler arası geçiş fonksiyonu
-    function sekmeDegistir(tur) {
-        const sunumDiv = document.getElementById('sunumAlani');
-        const testDiv = document.getElementById('testAlani');
-        const btnSunum = document.getElementById('btnSunum');
-        const btnTest = document.getElementById('btnTest');
-
-        if (tur === 'sunum') {
-            sunumDiv.style.display = 'block';
-            testDiv.style.display = 'none';
-            btnSunum.style.background = '#2ecc71';
-            btnSunum.style.color = 'white';
-            btnTest.style.background = '#ddd';
-            btnTest.style.color = '#333';
-        } else {
-            sunumDiv.style.display = 'none';
-            testDiv.style.display = 'block';
-            btnSunum.style.background = '#ddd';
-            btnSunum.style.color = '#333';
-            btnTest.style.background = '#e74c3c';
-            btnTest.style.color = 'white';
-        }
+    // Klasördeki dosyayı ekrana getiren fonksiyon
+    function dosyaAc(dosyaAdi) {
+        const ekran = document.getElementById('dersEkran');
+        const durum = document.getElementById('ekranDurum');
+        
+        // Klasör içindeki dosyaya yönlendiriyoruz (Aynı klasörde olmaları gerekir)
+        ekran.src = dosyaAdi;
+        ekran.style.display = "block";
+        durum.innerText = "📺 Şu an açık: " + dosyaAdi + " (MÜO 5-A)";
     }
-
-    // Seçilen dosyayı ekrana yansıtma fonksiyonu
-    function dosyayiGoster(file) {
-        const reader = new FileReader();
-        const iframe = document.getElementById('tahtaIframe');
-        const gorsel = document.getElementById('tahtaGorsel');
-        const bekliyorText = document.getElementById('dosyaBekleniyor');
-        const durum = document.getElementById('tahtaDurum');
-
-        reader.onload = function(e) {
-            const veri = e.target.result;
-            bekliyorText.style.display = "none";
-            
-            if (file.type === "application/pdf") {
-                iframe.src = veri;
-                iframe.style.display = "block";
-                gorsel.style.display = "none";
-            } else {
-                gorsel.src = veri;
-                gorsel.style.display = "block";
-                iframe.style.display = "none";
-            }
-            durum.innerText = "📺 " + file.name + " (MÜO 5-A Canlı Ders)";
-        };
-        reader.readAsDataURL(file);
-    }
-
-    document.getElementById('sunumInput').onchange = function(e) {
-        if(e.target.files[0]) dosyayiGoster(e.target.files[0]);
-    };
-
-    document.getElementById('testInput').onchange = function(e) {
-        if(e.target.files[0]) dosyayiGoster(e.target.files[0]);
-    };
 </script>
