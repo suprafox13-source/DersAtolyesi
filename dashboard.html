@@ -45,16 +45,12 @@
         .chat { height: 150px; overflow-y: auto; background: #fafafa; border: 1px solid #eee; padding: 10px; margin-bottom: 10px; font-size: 13px; }
         input[type="text"] { width: 75%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; outline: none; }
 
-        /* Yeni Klasör Tasarımı */
-        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        /* Klasör Tasarımı */
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .folder-card { background: #f8f9fa; border: 1px solid #e2e8f0; border-radius: 6px; padding: 15px; }
         .folder-title { font-size: 13px; font-weight: bold; margin-bottom: 10px; display: block; }
-        .pdf-btn { display: block; width: 100%; text-align: left; padding: 10px; background: white; border: 1px solid #cbd5e1; border-radius: 4px; margin-bottom: 6px; cursor: pointer; font-size: 12px; transition: 0.2s; }
-        .pdf-btn:hover { background: #f1f5f9; border-color: var(--eba); }
-        
-        /* Akıllı Tahta Görüntüleyici */
-        .viewer-box { background: #2c3e50; padding: 10px; border-radius: 8px; border: 4px solid #34495e; text-align: center; }
-        iframe { width: 100%; height: 500px; border: none; background: white; border-radius: 4px; display: none; }
+        .pdf-btn { display: block; width: 100%; text-align: left; padding: 12px; background: white; border: 1px solid #cbd5e1; border-radius: 6px; margin-bottom: 8px; cursor: pointer; font-size: 13px; font-weight: 500; transition: 0.2s; }
+        .pdf-btn:hover { background: #f1f5f9; border-color: var(--eba); color: var(--eba); }
     </style>
 </head>
 <body>
@@ -127,25 +123,24 @@
 
         <div class="sunum-container" id="panelKitap">
             <div class="card">
-                <div class="card-h">📁 5-A Matematik Ders Klasörü <span>(GitHub Sunumlar)</span></div>
+                <div class="card-h">📁 5-A Matematik Ders Klasörü <span>(Google Drive Linkleri)</span></div>
                 
+                <p style="font-size: 13px; color: #666; margin-bottom: 20px;">
+                    Aşağıdaki kitap veya testlere tıkladığında, dosyalar doğrudan <b>Google Drive</b> üzerinden yeni sekmede tam ekran açılır.
+                </p>
+
                 <div class="btn-grid">
                     <div class="folder-card">
-                        <span class="folder-title" style="color: #2ecc71;">📖 Matematik Sunumları</span>
-                        <button class="pdf-btn" onclick="dosyaAc('mat1.pdf')">📄 Matematik 1. Fasikül</button>
-                        <button class="pdf-btn" onclick="dosyaAc('mat2.pdf')">📄 Matematik 2. Fasikül</button>
+                        <span class="folder-title" style="color: #2ecc71;">📖 Matematik Kitapları</span>
+                        <button class="pdf-btn" onclick="driveAc('https://drive.google.com/drive/my-drive')">📄 Matematik 1. Fasikül'ü Aç</button>
+                        <button class="pdf-btn" onclick="driveAc('https://drive.google.com/drive/my-drive')">📄 Matematik 2. Fasikül'ü Aç</button>
                     </div>
 
                     <div class="folder-card">
                         <span class="folder-title" style="color: #e74c3c;">📝 Çalışma Testleri</span>
-                        <button class="pdf-btn" onclick="dosyaAc('test1.pdf')">✍️ Konu Testi 1</button>
-                        <button class="pdf-btn" onclick="dosyaAc('test2.pdf')">✍️ Konu Testi 2</button>
+                        <button class="pdf-btn" onclick="driveAc('https://drive.google.com/drive/my-drive')">✍️ Konu Testi 1'i Aç</button>
+                        <button class="pdf-btn" onclick="driveAc('https://drive.google.com/drive/my-drive')">✍️ Konu Testi 2'i Aç</button>
                     </div>
-                </div>
-
-                <div class="viewer-box">
-                    <div id="ekranDurum" style="color: #bdc3c7; font-size: 13px; margin-bottom: 10px; font-weight: bold;">📺 Akıllı Tahta: Dosya Seçilmesi Bekleniyor...</div>
-                    <iframe id="pdfViewer" src=""></iframe>
                 </div>
             </div>
         </div>
@@ -180,17 +175,9 @@
             }
         }
 
-        // Sunumlar Klasöründeki PDF'leri Göster
-        function dosyaAc(dosyaAdi) {
-            const iframe = document.getElementById('pdfViewer');
-            const durum = document.getElementById('ekranDurum');
-            
-            // GitHub üzerindeki "Sunumlar" klasöründeki dosyayı hedef alır
-            const dosyaYolu = "Sunumlar/" + dosyaAdi;
-            
-            iframe.src = dosyaYolu;
-            iframe.style.display = "block";
-            durum.innerText = "📺 Şu an açık: " + dosyaAdi + " (MÜO 5-A)";
+        // Google Drive Linklerini Açan Fonksiyon 🚀
+        function driveAc(url) {
+            window.open(url, '_blank');
         }
 
         // Mesaj Gönder
@@ -223,3 +210,4 @@
     </script>
 </body>
 </html>
+ 
