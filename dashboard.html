@@ -2,264 +2,151 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EBA - Matematik İzi Portalı</title>
+    <title>5-A Matematik İzi | Görevli Paneli</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Arial, sans-serif;
-        }
-        body {
-            background-color: #f4f5f7;
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
-        /* Sol EBA Menüsü */
-        .sidebar {
-            width: 240px;
-            background-color: #ffffff;
-            border-right: 1px solid #e0e0e0;
-            display: flex;
-            flex-direction: column;
-            padding: 20px 0;
-        }
-        .logo-area {
-            text-align: center;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #f0f0f0;
-            margin-bottom: 20px;
-        }
-        .logo-area h1 {
-            color: #f37021; /* EBA Turuncusu */
-            font-size: 22px;
-            font-weight: bold;
-        }
-        .logo-area p {
-            font-size: 11px;
-            color: #777;
-        }
-        .menu-item {
-            padding: 12px 25px;
-            color: #555;
-            text-decoration: none;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            border-left: 4px solid transparent;
-            transition: all 0.2s;
-        }
-        .menu-item:hover, .menu-item.active {
-            background-color: #fff5f0;
-            color: #f37021;
-            border-left-color: #f37021;
-            font-weight: bold;
-        }
-        /* Sağ İçerik Alanı */
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            background-color: #f4f5f7;
-            overflow-y: auto;
-        }
-        /* Üst Profil Barı */
-        .top-bar {
-            height: 60px;
-            background-color: #ffffff;
-            border-bottom: 1px solid #e0e0e0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 30px;
-        }
-        .school-name {
-            font-weight: bold;
-            color: #2c3e50;
-            font-size: 14px;
-        }
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            color: #333;
-        }
-        .avatar {
-            width: 35px;
-            height: 35px;
-            background-color: #f37021;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-        /* Ders İçerik Kartı */
-        .content-area {
-            padding: 30px;
-            flex: 1;
-        }
-        .eba-card {
-            background: #ffffff;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .eba-card-title {
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #f37021;
-            padding-bottom: 5px;
-            display: inline-block;
-        }
-        .grid-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        .eba-btn {
-            background-color: #ffffff;
-            border: 1px solid #dcdcdc;
-            padding: 15px;
-            border-radius: 6px;
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        .eba-btn:hover {
-            border-color: #f37021;
-            box-shadow: 0 2px 10px rgba(243,112,33,0.1);
-        }
-        .eba-btn span {
-            font-weight: bold;
-            font-size: 14px;
-            color: #2c3e50;
-        }
-        .eba-btn small {
-            font-size: 11px;
-            color: #888;
-        }
-        /* EBA TV / Tahta Ekranı */
-        .tahta-container {
-            background: #2c3e50;
-            border-radius: 8px;
-            padding: 10px;
-            border: 4px solid #34495e;
-            display: none;
-        }
-        .tahta-header {
-            color: white;
-            font-size: 12px;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-        }
-        iframe {
-            width: 100%;
-            height: 550px;
-            border: none;
-            background: white;
-            border-radius: 4px;
-        }
+        :root { --eba: #0088cc; --koyu: #2c3e50; --turuncu: #ff9f43; --gri: #f4f7f8; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background: var(--gri); display: flex; height: 100vh; overflow: hidden; }
+
+        /* Sol Menü */
+        .sidebar { width: 250px; background: white; border-right: 1px solid #ddd; display: flex; flex-direction: column; }
+        .logo { background: var(--eba); color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 20px; }
+        .profile { padding: 20px; text-align: center; border-bottom: 1px solid #eee; }
+        #uPic { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--eba); margin-bottom: 10px; }
+        .badge { background: #ff4757; color: white; font-size: 10px; padding: 3px 10px; border-radius: 10px; display: inline-block; font-weight: bold; }
+        
+        .nav-item { padding: 15px 25px; cursor: pointer; color: #444; font-size: 14px; transition: 0.2s; border-bottom: 1px solid #f9f9f9; }
+        .nav-item:hover { background: #f0f7ff; color: var(--eba); }
+        .active { background: var(--eba); color: white !important; }
+
+        /* Ana İçerik */
+        .main { flex: 1; display: flex; flex-direction: column; }
+        .top-bar { background: var(--koyu); color: white; padding: 12px 30px; display: flex; justify-content: space-between; align-items: center; }
+        .container { padding: 25px; overflow-y: auto; display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px; }
+
+        /* Kartlar */
+        .card { background: white; border-radius: 8px; border: 1px solid #ddd; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .card-h { font-size: 16px; font-weight: bold; color: var(--eba); border-bottom: 1.5px solid #eee; padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; }
+
+        /* Liste Yapıları */
+        .list-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #eee; font-size: 13px; }
+        .status { font-weight: bold; font-size: 11px; padding: 2px 8px; border-radius: 4px; }
+        .done { background: #e3fcef; color: #00875a; }
+        .wait { background: #fff0b3; color: #856404; }
+
+        /* Sınav Modülü */
+        .quiz-box { background: #f9f9f9; padding: 15px; border-radius: 8px; text-align: center; }
+        .btn-quiz { background: var(--turuncu); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+
+        /* Mesajlaşma */
+        .chat { height: 150px; overflow-y: auto; background: #fafafa; border: 1px solid #eee; padding: 10px; margin-bottom: 10px; font-size: 13px; }
+        input[type="text"] { width: 75%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; outline: none; }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
-        <div class="logo-area">
-            <h1>eba</h1>
-            <p>Matematik İzi Portalı</p>
+        <div class="logo">MATEMATİK İZİ</div>
+        <div class="profile">
+            <img id="uPic" src="https://api.dicebear.com/7.x/bottts/svg?seed=Admin">
+            <h4 id="uName">Yükleniyor...</h4>
+            <div class="badge">GENEL SINIF GÖREVLİSİ</div>
+            <p style="font-size: 12px; color: var(--eba); margin-top: 5px; font-weight: bold;">5-A SINIFI</p>
         </div>
-        <div class="menu-item active">🏠 Sayfam</div>
-        <div class="menu-item">📚 Dersler</div>
-        <div class="menu-item">✍️ Sınavlar</div>
-        <div class="menu-item">📁 Kütüphane</div>
-        <div class="menu-item">📊 Raporlar</div>
+        <div class="nav-menu">
+            <div class="nav-item active">🏠 Ana Panel</div>
+            <div class="nav-item">📚 Kitap Sunumları</div>
+            <div class="nav-item">📝 Ödev Takip</div>
+            <div class="nav-item">✍️ Test & Sınavlar</div>
+            <div class="nav-item" style="color:#ff4757; font-weight:bold" onclick="hocayaRaporla()">📤 Hocama Bildir</div>
+        </div>
     </div>
 
-    <div class="main-content">
+    <div class="main">
         <div class="top-bar">
-            <div class="school-name">🏫 MUSTAFA ÜSTÜNDAĞ ORTAOKULU - 5-A SINIFI</div>
-            <div class="user-profile">
-                <span>Hoş geldin, <b>Semih</b></span>
-                <div class="avatar">S</div>
-            </div>
+            <span>Mustafa Üstündağ Ortaokulu / 5-A Şubesi</span>
+            <div style="font-size: 13px;">Puanım: <b id="totalXP" style="color:var(--turuncu)">37</b></div>
         </div>
 
-        <div class="content-area">
-            
-            <div class="eba-card">
-                <div class="eba-card-title">📖 Matematik Sunumları (Fasiküller)</div>
-                <div class="grid-buttons">
-                    <button class="eba-btn" onclick="dersAc('mat1.pdf', 'Matematik 1. Fasikül')">
-                        <span>📐 1. Fasikül</span>
-                        <small>Geometrik Şekiller</small>
-                    </button>
-                    <button class="eba-btn" onclick="dersAc('mat2.pdf', 'Matematik 2. Fasikül')">
-                        <span>🔢 2. Fasikül</span>
-                        <small>Sayılar ve İşlemler</small>
-                    </button>
+        <div class="container">
+            <div class="left">
+                <div class="card">
+                    <div class="card-h">📖 Kitap Sunumu & Ödev Durumu <span>(Haftalık)</span></div>
+                    <div class="list-item"><span>📌 Kesirler Kitabı Sunumu - Kerem A.</span> <span class="status done">TAMAMLANDI</span></div>
+                    <div class="list-item"><span>📌 Sayı Avcıları Sunumu - Zeynep T.</span> <span class="status wait">BEKLENİYOR</span></div>
+                    <div class="list-item"><span>📝 Doğal Sayılar Çalışma Kağıdı</span> <span class="status wait">6 KİŞİ EKSİK</span></div>
+                </div>
+
+                <div class="card">
+                    <div class="card-h">✍️ Matematik Sınav Merkezi</div>
+                    <div class="quiz-box">
+                        <p style="font-size: 14px; color: #666;">Aktif Sınav: <b>Doğal Sayılarla İşlemler</b></p>
+                        <button class="btn-quiz" onclick="sinavBaslat()">Sınava Başla (5 Soru)</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-h">💬 Sınıf Mesajları</div>
+                    <div class="chat" id="chatbox">
+                        <div><b>Sistem:</b> 5-A Sınıfı mesajlaşma alanı aktif.</div>
+                    </div>
+                    <input type="text" id="mInp" placeholder="Duyuru yaz...">
+                    <button onclick="sendMsg()" style="padding:8px; background:var(--eba); color:white; border:none; border-radius:4px; cursor:pointer;">Gönder</button>
                 </div>
             </div>
 
-            <div class="eba-card">
-                <div class="eba-card-title">📝 Çalışma ve Konu Testleri</div>
-                <div class="grid-buttons">
-                    <button class="eba-btn" onclick="dersAc('test1.pdf', 'Konu Testi 1')" style="border-left: 4px solid #e74c3c;">
-                        <span>✍️ Çalışma Testi 1</span>
-                        <small>Konu Tarama</small>
-                    </button>
-                    <button class="eba-btn" onclick="dersAc('test2.pdf', 'Konu Testi 2')" style="border-left: 4px solid #e74c3c;">
-                        <span>✍️ Çalışma Testi 2</span>
-                        <small>Ünite Değerlendirme</small>
-                    </button>
+            <div class="right">
+                <div class="card">
+                    <div class="card-h">📝 Görevli Not Defteri</div>
+                    <p style="font-size: 12px; color: #888; margin-bottom: 10px;">Hocana iletilecek notları buraya yaz:</p>
+                    <textarea id="notlar" style="width:100%; height:150px; border:1px solid #eee; padding:10px; font-size:13px; outline:none;" placeholder="Örn: Bugün ödevlerini getirmeyen öğrenciler..."></textarea>
+                </div>
+
+                <div class="card" style="text-align: center;">
+                    <div class="card-h">📅 Takvim</div>
+                    <h2 style="color:var(--eba)">9</h2>
+                    <p>Mart 2026</p>
+                    <div style="margin-top:15px; font-size: 12px; color: #ff4757; font-weight: bold;">Yarın: Üslü Sayılar Testi!</div>
                 </div>
             </div>
-
-            <div class="tahta-container" id="tahtaKutusu">
-                <div class="tahta-header">
-                    <span id="aktifDers">📺 Canlı Ders Ekranı</span>
-                    <span style="color: #f37021; font-weight: bold;">EBA TV - 5-A</span>
-                </div>
-                <iframe id="ebaIframe" src=""></iframe>
-            </div>
-
         </div>
     </div>
 
     <script>
-        // EBA Tarzında dosyaları alt panelde açan kod
-        function dersAc(dosyaAdi, dersBasligi) {
-            const tahta = document.getElementById('tahtaKutusu');
-            const iframe = document.getElementById('ebaIframe');
-            const baslik = document.getElementById('aktifDers');
+        // Sayfa Yüklendiğinde
+        window.onload = function() {
+            const isim = localStorage.getItem('m_izi_name') || "Görevli";
+            document.getElementById('uName').innerText = isim;
+            document.getElementById('totalXP').innerText = localStorage.getItem('m_izi_xp') || "37";
+        };
 
-            // GitHub'daki Sunumlar klasöründen çekiyor
-            const dosyaYolu = "Sunumlar/" + dosyaAdi;
+        // Mesaj Gönder
+        function sendMsg() {
+            const inp = document.getElementById('mInp');
+            if(inp.value == "") return;
+            const chat = document.getElementById('chatbox');
+            chat.innerHTML += `<div><b>Sen:</b> ${inp.value}</div>`;
+            inp.value = "";
+            chat.scrollTop = chat.scrollHeight;
+        }
 
-            iframe.src = dosyaYolu;
-            tahta.style.display = "block";
-            baslik.innerText = "📺 Şu an açık: " + dersBasligi;
+        // Sınav Başlatma
+        function sinavBaslat() {
+            let cevap = confirm("Matematik Testi Başlatılsın mı? (5 Dakika Süren Var)");
+            if(cevap) {
+                alert("Test Yükleniyor... İlk Soru: 1.250 + 3.450 işleminin sonucu kaçtır?");
+            }
+        }
 
-            // Ekran açıldığında otomatik olarak o alana kaydırır
-            tahta.scrollIntoView({ behavior: 'smooth' });
+        // Hocaya Bildir
+        function hocayaRaporla() {
+            const not = document.getElementById('notlar').value;
+            if(!not) {
+                alert("Lütfen önce notlar kısmına raporunuzu yazın.");
+            } else {
+                alert("Raporunuz başarıyla hocanıza (simüle) iletildi!\n\nGörevli: " + localStorage.getItem('m_izi_name'));
+            }
         }
     </script>
-
 </body>
 </html>
- 
