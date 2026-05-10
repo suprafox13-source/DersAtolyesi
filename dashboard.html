@@ -123,7 +123,7 @@
 
         <div class="sunum-container" id="panelKitap">
             <div class="card">
-                <div class="card-h">📁 5-A Matematik Ders Klasörü <span>(Google Drive Linkleri)</span></div>
+                <div class="card-h">📁 5-A Matematik Ders Klasörü <span>(Google Drive Dosyaları)</span></div>
                 
                 <p style="font-size: 13px; color: #666; margin-bottom: 20px;">
                     Aşağıdaki kitap veya testlere tıkladığında, dosyalar doğrudan <b>Google Drive</b> üzerinden yeni sekmede tam ekran açılır.
@@ -132,14 +132,14 @@
                 <div class="btn-grid">
                     <div class="folder-card">
                         <span class="folder-title" style="color: #2ecc71;">📖 Matematik Kitapları</span>
-                        <button class="pdf-btn" onclick="driveAc('https://drive.google.com/drive/my-drive')">📄 Matematik 1. Fasikül'ü Aç</button>
-                        <button class="pdf-btn" onclick="driveAc('https://drive.google.com/drive/my-drive')">📄 Matematik 2. Fasikül'ü Aç</button>
+                        <button class="pdf-btn" onclick="driveAc('https://drive.google.com/file/d/1w3KYRGRtyOYjIg4oPMBptwGHPh1kyf2E/view?usp=drivesdk')">📄 1. Kitap'ı Aç</button>
+                        <button class="pdf-btn" onclick="driveAc('https://drive.google.com/file/d/1RTFgS1hT6NER_oMcaEFQCGnzcMig8Aek/view?usp=drivesdk')">📄 2. Kitap'ı Aç</button>
                     </div>
 
                     <div class="folder-card">
                         <span class="folder-title" style="color: #e74c3c;">📝 Çalışma Testleri</span>
-                        <button class="pdf-btn" onclick="driveAc('https://drive.google.com/drive/my-drive')">✍️ Konu Testi 1'i Aç</button>
-                        <button class="pdf-btn" onclick="driveAc('https://drive.google.com/drive/my-drive')">✍️ Konu Testi 2'i Aç</button>
+                        <button class="pdf-btn" onclick="driveAc('https://drive.google.com/file/d/1EK8HBI3gh6BkZ62V-0lT26kx6n4HJNmz/view?usp=drivesdk')">✍️ Test 1'i Aç</button>
+                        <button class="pdf-btn" onclick="driveAc('https://drive.google.com/file/d/1-JaIhX7WeWdnbHrYz2ZVU30WbNjaUteZ/view?usp=drivesdk')">✍️ Test 2'yi Aç</button>
                     </div>
                 </div>
             </div>
@@ -165,13 +165,14 @@
             if (hedef === 'ana') {
                 panelAna.style.display = 'grid';
                 panelKitap.style.display = 'none';
-                menuAna.classList.add('active');
-                menuKitap.classList.remove('active');
+                menuAna.classList.add('add'); // Bu satırı temiz tutalım
+                menuAna.className = "nav-item active";
+                menuKitap.className = "nav-item";
             } else {
                 panelAna.style.display = 'none';
                 panelKitap.style.display = 'flex';
-                menuAna.classList.remove('active');
-                menuKitap.classList.add('active');
+                menuAna.className = "nav-item";
+                menuKitap.className = "nav-item active";
             }
         }
 
