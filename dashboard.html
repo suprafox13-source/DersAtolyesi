@@ -5,157 +5,132 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mustafa Üstündağ Ortaokulu - 5-A Matematik İzi</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
         body {
-            background-color: #f5f6fa;
-            color: #333;
-            padding: 20px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .card {
-            background: #ffffff;
-            border: 1px solid #e1e8ed;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        .card-header {
-            text-align: center;
-            border-bottom: 1px solid #f1f1f1;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-        .card-header h3 {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
             margin: 0;
-            color: #2c3e50;
-            font-size: 18px;
-        }
-        .card-header span {
-            font-size: 11px;
-            color: #7f8c8d;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        .section-box {
-            background: #f8f9fa;
-            padding: 12px;
-            border-radius: 6px;
-            border: 1px solid #e9ecef;
-        }
-        .section-title {
-            font-size: 12px;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-        .sunum-title { color: #2ecc71; }
-        .test-title { color: #e74c3c; }
-        
-        .btn-list {
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            align-items: center;
         }
-        .btn {
+        .container {
             width: 100%;
-            padding: 8px 10px;
-            font-size: 11px;
-            border: 1px solid #ced4da;
-            background: #ffffff;
-            cursor: pointer;
-            border-radius: 4px;
-            text-align: left;
-            transition: all 0.2s ease;
-        }
-        .btn:hover {
-            background: #f1f3f5;
-            border-color: #adb5bd;
-        }
-        .viewer-box {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 6px;
-            padding: 10px;
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
-        .viewer-status {
-            color: #495057;
-            font-size: 11px;
+        h2 {
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 20px;
+        }
+        h3 {
+            color: #666;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: normal;
+        }
+        .section {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .section-title {
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 10px;
             display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+        }
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .btn-test {
+            background-color: #28a745;
+        }
+        .btn-test:hover {
+            background-color: #218838;
+        }
+        .viewer {
+            margin-top: 20px;
+            border-top: 2px solid #ddd;
+            padding-top: 20px;
         }
         iframe {
-            border: none;
+            width: 100%;
+            height: 500px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
             display: none;
-            background: #ffffff;
-            border-radius: 4px;
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+        }
+        .status {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="card">
-        
-        <div class="card-header">
-            <h3>🏫 MUSTAFA ÜSTÜNDAĞ ORTAOKULU</h3>
-            <span>5-A Matematik İzi Kontrol Paneli</span>
+    <h2>🏫 MUSTAFA ÜSTÜNDAĞ ORTAOKULU</h2>
+    <h3>5-A Matematik İzi Kontrol Paneli</h3>
+
+    <div class="section">
+        <span class="section-title">📖 Sunumlar</span>
+        <div class="btn-group">
+            <button class="btn" onclick="dosyaAc('mat1.pdf')">📄 Matematik 1. Fasikül</button>
+            <button class="btn" onclick="dosyaAc('mat2.pdf')">📄 Matematik 2. Fasikül</button>
         </div>
+    </div>
 
-        <div class="grid">
-            <div class="section-box">
-                <span class="section-title sunum-title">📖 Sunumlar</span>
-                <div class="btn-list">
-                    <button class="btn" onclick="dosyaAc('mat1.pdf')">📄 Matematik 1. Fasikül</button>
-                    <button class="btn" onclick="dosyaAc('mat2.pdf')">📄 Matematik 2. Fasikül</button>
-                </div>
-            </div>
-
-            <div class="section-box">
-                <span class="section-title test-title">📝 Çalışma Testleri</span>
-                <div class="btn-list">
-                    <button class="btn" onclick="dosyaAc('test1.pdf')">✍️ Konu Testi 1</button>
-                    <button class="btn" onclick="dosyaAc('test2.pdf')">✍️ Konu Testi 2</button>
-                </div>
-            </div>
+    <div class="section">
+        <span class="section-title">📝 Çalışma Testleri</span>
+        <div class="btn-group">
+            <button class="btn btn-test" onclick="dosyaAc('test1.pdf')">✍️ Konu Testi 1</button>
+            <button class="btn btn-test" onclick="dosyaAc('test2.pdf')">✍️ Konu Testi 2</button>
         </div>
+    </div>
 
-        <div class="viewer-box">
-            <span id="ekranDurum" class="viewer-status">📺 Ekran: Dosya bekleniyor...</span>
-            <iframe id="dersEkran" src="" width="100%" height="480px"></iframe>
-        </div>
-
+    <div class="viewer">
+        <div id="status" class="status">📺 Ekran: Dosya bekleniyor...</div>
+        <iframe id="pdfViewer" src=""></iframe>
     </div>
 </div>
 
 <script>
-    // Sunumlar klasöründeki PDF'leri ekrana yansıtır
+    // Klasörün içindeki PDF'leri açan orijinal fonksiyon
     function dosyaAc(dosyaAdi) {
-        const ekran = document.getElementById('dersEkran');
-        const durum = document.getElementById('ekranDurum');
+        const iframe = document.getElementById('pdfViewer');
+        const status = document.getElementById('status');
         
-        // GitHub Pages üzerinde "Sunumlar" klasörünün yolunu tanımlıyoruz
+        // GitHub'daki Sunumlar klasörünü hedef gösteriyoruz
         const dosyaYolu = "Sunumlar/" + dosyaAdi;
         
-        ekran.src = dosyaYolu;
-        ekran.style.display = "block";
-        durum.innerText = "📺 Şu an açık: " + dosyaAdi + " (MÜO 5-A)";
+        iframe.src = dosyaYolu;
+        iframe.style.display = "block";
+        status.innerText = "📺 Şu an açık: " + dosyaAdi;
     }
 </script>
 
